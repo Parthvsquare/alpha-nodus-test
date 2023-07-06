@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import MyApp from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
-import "./index.css";
+import "antd/dist/reset.css";
 import ConfigProvider from "antd/es/config-provider";
 import { App } from "antd";
 
