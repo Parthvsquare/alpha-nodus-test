@@ -1,7 +1,9 @@
 import { tenantInput } from "@/store/authAtom";
 import { useLocationListQuery } from "@/types/generated";
-import { Button, Card, Col, Result, Row, Spin } from "antd";
+import { Button, Card, Col, Result, Row, Spin, Tag, Typography } from "antd";
 import { useAtom } from "jotai";
+
+const { Text, Title } = Typography;
 
 function Home() {
   const [tenant] = useAtom(tenantInput);
@@ -24,19 +26,52 @@ function Home() {
 
   return (
     <Spin spinning={loading}>
-      <Row>
-        <Col>
-          {data?.locationList?.resources?.map((value) => {
-            return (
-              <Card key={value!.id}>
-                <div>{value?.id}</div>
-                <div>{value?.name}</div>
-                <div>{value?.tag}</div>
-                <div>{value?.type}</div>
+      <Row gutter={[10, 16]}>
+        {data?.locationList?.resources?.map((value) => {
+          return (
+            <Col
+              xs={{ span: 4, offset: 1 }}
+              lg={{ span: 6, offset: 0 }}
+              key={value!.id}
+            >
+              <Card
+                title={
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      marginBlock: "1rem",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <Title level={4}>{value?.name}</Title>
+                      <Text style={{ fontWeight: "normal" }}>
+                        {value?.address}
+                      </Text>
+                    </div>
+                    <div>
+                      <Tag
+                        color="processing"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        {value?.status}
+                      </Tag>
+                    </div>
+                  </div>
+                }
+              >
+                <div style={{ display: "flex", rowGap: "1rem" }}>
+                  {/* <Text>{value?.telecom.}</Text> */}
+                </div>
               </Card>
-            );
-          })}
-        </Col>
+            </Col>
+          );
+        })}
       </Row>
     </Spin>
   );
