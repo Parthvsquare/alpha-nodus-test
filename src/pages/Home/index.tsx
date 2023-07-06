@@ -52,6 +52,10 @@ function Home() {
     />;
   }
 
+  const filteredLocations = data?.locationList?.resources?.filter((location) =>
+    location?.name.toLowerCase().includes(inputCapture.toLowerCase()),
+  );
+
   function onDoubleClick(index: number) {
     setOpen(true);
 
@@ -91,7 +95,7 @@ function Home() {
 
       <Spin spinning={loading}>
         <Row gutter={[10, 16]} style={{ padding: "1rem" }}>
-          {data?.locationList?.resources?.map((value, index) => {
+          {filteredLocations?.map((value, index) => {
             return (
               <Col
                 xs={{ span: 4, offset: 1 }}
