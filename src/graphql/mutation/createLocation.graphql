@@ -1,0 +1,5 @@
+mutation LocationCreate($requestBody: LocationWriteInput!, $tenant: String!) {
+  locationCreate(requestBody: $requestBody, tenant: $tenant) {
+    resourceID
+  }
+}

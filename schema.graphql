@@ -1,0 +1,4374 @@
+directive @permission(name: Permission, names: [Permission!]) on FIELD_DEFINITION
+
+type Query {
+  """
+  Fetch results for DB
+  
+  Equivalent to GET /{tenant}/analytics/textDBQuery
+  """
+  analyticsTextDBQuery(sqlQuery: String, tenant: String!): TextDBQueryListResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /{tenant}/appointment/
+  """
+  appointmentList(basedOn: String, device: String, endTime: String, id: [String], limit: Int, location: String, order: Order2, orderBy: OrderBy, page: Int, patient: String, rescheduleRequestCreatedTime: String, rescheduleStartTime: String, rescheduleStatus: RescheduleStatus, search: String, serviceCategory: String, serviceCode: String, startTime: String, status: Status, tag: String, tenant: String!, visit: String): AppointmentQueryListResponse
+
+  """
+  Get appointment metrics based on a given type
+  
+  Equivalent to GET /{tenant}/appointment/metrics/{type}
+  """
+  appointmentMetricsRead(device: String, from: String, location: String, serviceCategory: String, tenant: String!, to: String, type: String!): AppointmentHistoryQueryMetricResponse
+
+  """
+  Get a list of nudge Eligible visits.
+  
+  Equivalent to GET /{tenant}/appointment/nudgeEligible
+  """
+  appointmentNudgeEligibleList(device: String, endTime: String, limit: Int, location: String, minutesDuration: Float, order: Order2, page: Int, serviceTypeCode: String, startTime: String, tenant: String!): AppointmentQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/appointment/{id}
+  """
+  appointmentRead(id: String!, tenant: String!): AppointmentQueryReadResponse
+
+  """
+  Get a list of reschedule requests.
+  
+  Equivalent to GET /{tenant}/appointment/reschedule
+  """
+  appointmentRescheduleList(limit: Int, order: Order3, orderBy: OrderBy2, page: Int, tenant: String!): AppointmentRescheduleQueryListResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /codeSystem/
+  """
+  codeSystemList(limit: Int, order: Order4, orderBy: OrderBy3, page: Int, system: String): CodeSystemQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /codeSystem/{id}
+  """
+  codeSystemRead(id: String!): CodeSystemQueryReadResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /codeSystem/{id}/coding
+  """
+  codingList(code: String, display: String, id: String!, limit: Int, page: Int, type: String): CodingQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /codeSystem/{id}/coding/{coding_id}
+  """
+  codingRead(codingId: String!, id: String!): CodingQueryReadResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /{tenant}/coverage/
+  """
+  coverageList(id: [String], limit: Int, order: Order5, orderBy: OrderBy4, organization: String, page: Int, patient: String, tag: String, tenant: String!, visit: String): CoverageQueryListResponse
+
+  """
+  Get List of Coverage availity transactions.
+  
+  Equivalent to GET /{tenant}/coverage/{coverageid}/transactions
+  """
+  coverageListTransactions(coverageid: String!, limit: Int, page: Int, serviceType: String, tenant: String!): CoverageQueryListTransactionResponse
+
+  """
+  Get Metrics for a given metric type.
+  
+  Equivalent to GET /{tenant}/coverage/metrics/{type}
+  """
+  coverageMetricRead(from: String, tenant: String!, to: String, type: String!): CoverageMetricsListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/coverage/{id}
+  """
+  coverageRead(id: String!, tenant: String!): CoverageQueryReadResponse
+
+  """
+  Get Benefits by ID.
+  
+  Equivalent to GET /{tenant}/coverage/{id}/benefits
+  """
+  coverageReadBenefits(id: String!, tenant: String!): CoverageBenefitsResponse
+
+  """
+  Get an Edi by ID.
+  
+  Equivalent to GET /{tenant}/coverage/{id}/edi
+  """
+  coverageReadEdi(id: String!, tenant: String!): CoverageEdiResponse
+
+  """
+  Get Coverage availity transaction.
+  
+  Equivalent to GET /{tenant}/coverage/{coverageid}/transactions/{id}
+  """
+  coverageReadTransactions(coverageid: String!, id: String!, tenant: String!): CoverageQueryReadTransactionResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /{tenant}/device/
+  """
+  deviceList(id: [String], limit: Int, location: String, name: String, nudgeable: Boolean, order: Order6, orderBy: OrderBy5, page: Int, search: String, tag: String, tenant: String!, type: String): DeviceQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/device/{id}
+  """
+  deviceRead(id: String!, tenant: String!): DeviceQueryReadResponse
+
+  """
+  Get a list of device service duration.
+  
+  Equivalent to GET /{tenant}/device/{id}/serviceDuration
+  """
+  deviceServiceDurationList(id: String!, limit: Int, page: Int, tenant: String!): DeviceServiceDurationQueryListResponse
+
+  """
+  Get an device service duration by serviceTypeCode.
+  
+  Equivalent to GET /{tenant}/device/{id}/serviceDuration/{serviceTypeCode}
+  """
+  deviceServiceDurationRead(id: String!, serviceTypeCode: String!, tenant: String!): DeviceServiceDurationQueryReadResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /{tenant}/document/
+  """
+  documentList(actionRequired: String, appointment: String, documentType: String, limit: Int, order: Order7, orderBy: OrderBy6, page: Int, patient: String, search: String, tag: String, tenant: String!, visit: String): DocumentQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/document/{id}
+  """
+  documentRead(id: String!, tenant: String!): DocumentQueryReadResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/document/{id}/base64
+  """
+  documentReadBase64(id: String!, tenant: String!): DocumentQueryReadImage
+
+  """
+  Get a download URL for the desktop application.
+  
+  Equivalent to GET /{tenant}/download/desktop
+  """
+  downloadDesktop(beta: Boolean, tenant: String!): DownloadDesktop
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /{tenant}/estimate/
+  """
+  estimateList(limit: Float, order: Order8, orderBy: OrderBy7, page: Float, tenant: String!): EstimateQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/estimate/{id}
+  """
+  estimateRead(id: String!, tenant: String!): EstimateQueryReadResponse
+
+  """
+  Get a list of fax outreaches.
+  
+  Equivalent to GET /{tenant}/faxOutreach/
+  """
+  faxOutreachList(intent: Intent, limit: Int, order: Order9, orderBy: OrderBy8, page: Int, practitioner: String, status: Status2, tenant: String!, today: Boolean, visit: String): FaxOutreachQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/faxOutreach/{id}
+  """
+  faxOutreachRead(id: String!, tenant: String!): FaxOutreachQueryReadResponse
+
+  """
+  Get a list of fax outreaches.
+  
+  Equivalent to GET /{tenant}/faxOutreach/rule
+  """
+  faxOutreachRuleList(intent: Intent, limit: Int, order: Order10, orderBy: OrderBy9, page: Int, practitioner: String, tenant: String!): FaxOutreachRuleQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/feeSchedule/{id}/fees
+  """
+  feeScheduleFeesList(id: String!, limit: Int, order: Order11, orderBy: OrderBy10, page: Int, serviceTypeCode: String, tenant: String!): FeeScheduleFeesQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/feeSchedule/{id}/fees/{feeId}
+  """
+  feeScheduleFeesRead(feeId: String!, id: String!, tenant: String!): FeeScheduleFeesQueryReadResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /{tenant}/feeSchedule/
+  """
+  feeScheduleList(id: [String], limit: Int, name: String, order: Order11, orderBy: OrderBy10, page: Int, tenant: String!): FeeScheduleQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/feeSchedule/{id}
+  """
+  feeScheduleRead(id: String!, serviceType: String, tenant: String!): FeeScheduleQueryReadResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /{tenant}/flow/
+  """
+  flowList(appointmentId: String, deviceId: String, limit: Int, order: Order12, orderBy: OrderBy11, page: Int, patientId: String, tenant: String!, visitId: String): FlowQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/flow/{id}
+  """
+  flowRead(id: String!, tenant: String!): FlowQueryReadResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /{tenant}/location/
+  """
+  locationList(address: String, alias: String, description: String, id: [String], limit: Int, managingOrganization: String, name: String, npi: String, order: Order13, orderBy: OrderBy12, page: Int, partOf: String, search: String, status: String, tag: String, taxId: String, tenant: String!, type: String): LocationQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/location/{id}
+  """
+  locationRead(id: String!, tenant: String!): LocationQueryReadResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /{tenant}/lookup/authRequirement
+  """
+  lookupList(ediId: String, groupNumber: String, id: String, isAuthRequired: Boolean, limit: Int, organizationName: String, page: Int, serviceType: ServiceType2Input, subscriberPrefix: String, susanOutput: String, tenant: String!): LookupQueryListAuthRequirementResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/lookup/authRequirement/{id}
+  """
+  lookupRead(id: String!, tenant: String!): LookupQueryReadAuthRequrimentResponse
+
+  """
+  Validate authRequirement and sent the auth type
+  
+  Equivalent to GET /{tenant}/lookup/authRequirement/validate
+  """
+  lookupValidate(ediId: String, groupNumber: String, limit: Int, organizationName: String, serviceTypeCode: String, subscriberPrefix: String, susanOutput: String, tenant: String!): LookupqueryAuthRequirementValidationResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /{tenant}/order/
+  """
+  orderList(id: [String], limit: Int, order: Order14, orderBy: OrderBy13, page: Int, tenant: String!): OrderQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/order/{id}
+  """
+  orderRead(id: String!, tenant: String!): OrderQueryReadResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /{tenant}/organization/{id}/contract
+  """
+  organizationContractList(id: String!, limit: Int, location: String, order: Order17, orderBy: OrderBy16, page: Int, serviceType: String, tenant: String!): OrganizationContractQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/organization/{id}/contract/{contractId}
+  """
+  organizationContractRead(contractId: String!, id: String!, tenant: String!): OrganizationContractQueryReadResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /{tenant}/organization/{id}/feeSchedule
+  """
+  organizationFeeScheduleList(id: String!, limit: Int, location: String, order: Order16, orderBy: OrderBy15, page: Int, serviceType: String, tenant: String!): OrganizationFeeScheduleQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/organization/{id}/feeSchedule/{feeSchedule}
+  """
+  organizationFeeScheduleRead(feeSchedule: String!, id: String!, tenant: String!): OrganizationFeeScheduleQueryListResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /{tenant}/organization/
+  """
+  organizationList(active: String, id: [String], inNetwork: String, limit: Int, name: String, order: Order15, orderBy: OrderBy14, page: Int, search: String, tag: String, telecom: String, tenant: String!, type: String, types: [String]): OrganizationQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/organization/{id}
+  """
+  organizationRead(id: String!, tenant: String!): OrganizationQueryReadResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /{tenant}/patient/
+  """
+  patientList(birthDate: String, contactNumber: String, firstName: String, id: [String], lastName: String, limit: Int, order: Order18, orderBy: OrderBy17, page: Int, search: String, tag: String, tenant: String!): PatientQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/patient/{id}
+  """
+  patientRead(id: String!, tenant: String!): PatientQueryReadResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /{tenant}/practitioner/
+  """
+  practitionerList(doNotContact: Boolean, firstName: String, id: [String], isPriorAuthSubmissionEnabled: String, lastName: String, limit: Int, name: String, npi: String, nudgeable: Boolean, order: Order19, orderBy: OrderBy18, page: Int, search: String, tag: String, tenant: String!): PractitionerQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/practitioner/{id}
+  """
+  practitionerRead(id: String!, tenant: String!): PractitionerQueryReadResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/priorAuth/{id}/coverage/{coverage}
+  """
+  priorAuthCoverageRead(coverage: String!, id: String!, tenant: String!): PriorAuthCoverageQueryReadResponse
+
+  """
+  Get a list of history events.
+  
+  Equivalent to GET /{tenant}/priorAuth/{id}/history
+  """
+  priorAuthHistoryList(id: String!, tenant: String!): PriorAuthHistoryQueryListResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /{tenant}/priorAuth/
+  """
+  priorAuthList(appointment: String, appointmentStart: String, appointmentStatus: AppointmentStatus2, appointmentTimeFilterEnd: String, appointmentTimeFilterStart: String, authStatus: AuthStatus, coverageId: String, coverageStatus: CoverageStatus2, id: [String], insurance: String, limit: Int, location: String, metadataGravityAuthEnabled: String, order: Order20, orderBy: OrderBy19, page: Int, patientId: String, practitionerId: String, priorAuthStatus: PriorAuthStatus, priorAuthSubmissionEnabled: String, search: String, serviceCategory: [String], serviceType: [String], tag: String, tenant: String!): PriorAuthQueryListResponse
+
+  """
+  Get an metrics by metrics type.
+  
+  Equivalent to GET /{tenant}/priorAuth/metrics/{type}
+  """
+  priorAuthMetricsRead(authType: String, dimensionDate: DimensionDate, from: String, location: [String], priorAuthCoverageLinkId: [String], serviceCategory: String, submittedBy: String, tenant: String!, to: String, type: String!): PriorAuthHistoryQueryMetricResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/priorAuth/{id}
+  """
+  priorAuthRead(id: String!, tenant: String!): PriorAuthQueryReadResponse
+
+  """
+  Get a list of all schedule events.
+  
+  Equivalent to GET /{tenant}/schedule/events
+  """
+  scheduleEvents(end: String, limit: Int, page: Int, resourceId: String, resourceType: ResourceType, start: String, tenant: String!): ScheduleQueryListResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /{tenant}/schedule/
+  """
+  scheduleList(end: String, limit: Int, page: Int, resourceId: String, resourceType: ResourceType, start: String, tenant: String!): ScheduleQueryListResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/schedule/{id}
+  """
+  scheduleRead(id: String!, tenant: String!): ScheduleQueryReadResponse
+
+  """
+  Get a list of available slots.
+  
+  Equivalent to GET /{tenant}/schedule/slot
+  """
+  scheduleSlotList(end: String, limit: Int, page: Int, resourceId: String, resourceType: ResourceType, serviceTypeCode: String, slotDuration: Int, start: String, tenant: String!): ScheduleSlotQueryListResponse
+
+  """
+  Get a list of entities.
+  
+  Equivalent to GET /{tenant}/sync/
+  """
+  syncList(acknowledgedAt: String, eventId: String, eventName: String, eventType: String, limit: Int, order: Order21, orderBy: OrderBy20, page: Int, state: String, subEventId: String, tenant: String!): SyncQueryListResponse
+
+  """
+  Get an metrics by metrics type.
+  
+  Equivalent to GET /{tenant}/sync/metrics/{type}
+  """
+  syncMetricsRead(from: String, tenant: String!, to: String, type: String!): SyncQueryReadResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/sync/{id}
+  """
+  syncRead(id: String!, tenant: String!): SyncQueryReadResponse
+
+  """
+  Get a list of resource configs.
+  
+  Equivalent to GET /tenant/{tenant}/config
+  """
+  tenantConfigList(config: String, group: String, id: String, tenant: String!): TenantConfigQueryListResponse
+
+  """
+  Get an resource config by ID.
+  
+  Equivalent to GET /tenant/{tenant}/config/{id}
+  """
+  tenantConfigRead(id: String!, tenant: String!): TenantConfigQueryReadResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /tenant/{tenant}
+  """
+  tenantRead(tenant: String!): TenantQueryReadResponse
+
+  """
+  Fetch patients that are eligible for nudge.
+  
+  Equivalent to GET /{tenant}/textOutreach/eligible-for-nudge
+  """
+  textOutreachFetchEligibleForNudge(resourceId: String, resourceType: ResourceType2, tenant: String!): TextOutreachFetchEligibilityResponse
+
+  """
+  List all entities.
+  
+  Equivalent to GET /{tenant}/textOutreach/
+  """
+  textOutreachList(limit: Int, order: Order22, orderBy: OrderBy21, page: Int, status: Status3, tenant: String!, today: Boolean, type: Type, visit: String): TextOutreachQueryListResponse
+
+  """
+  Fetches analytics metrics for textOutreach.
+  
+  Equivalent to GET /{tenant}/textOutreach/metrics/{type}
+  """
+  textOutreachMetrics(from: String, tenant: String!, to: String, type: String!): TextOutreachQueryMetricResponse
+
+  """
+  Get an entity by ID.
+  
+  Equivalent to GET /{tenant}/textOutreach/{id}
+  """
+  textOutreachRead(id: String!, tenant: String!): TextOutreachQueryReadResponse
+
+  """
+  Get a list of nudge URLs.
+  
+  Equivalent to GET /url/nudge
+  """
+  urlNudgeList(appointment: String, limit: Int, order: Order23, orderBy: OrderBy22, page: Int): UrlNudgeQueryListResponse
+
+  """
+  Fetched analytics metrics for urlNudge
+  
+  Equivalent to GET /url/metrics/{type}
+  """
+  urlNudgeMetrics(from: String, tenant: String, to: String, type: String!): UrlNudgeQueryMetricResponse
+
+  """
+  Get an nudge URL by ID.
+  
+  Equivalent to GET /url/nudge/{id}
+  """
+  urlNudgeRead(id: String!): UrlNudgeQueryReadResponse
+
+  """
+  Get a list of users.
+  
+  Equivalent to GET /{tenant}/user/
+  """
+  userList(id: [String], limit: Int, page: Int, role: Role, sub: [String], tenant: String!): UserQueryListResponse
+
+  """
+  Get a user by username.
+  
+  Equivalent to GET /{tenant}/user/{username}
+  """
+  userRead(tenant: String!, username: String!): UserQueryReadResponse
+
+  """
+  Get a user by ID.
+  
+  Equivalent to GET /{tenant}/user/id/{id}
+  """
+  userReadById(id: String!, tenant: String!): UserQueryReadResponse
+}
+
+type Mutation {
+  """
+  Create a new entity.
+  
+  Equivalent to POST /{tenant}/appointment/
+  """
+  appointmentCreate(requestBody: AppointmentWriteInput!, tenant: String!): AppointmentCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/appointment/{id}
+  """
+  appointmentDelete(id: String!, tenant: String!): AppointmentCommandResponse
+
+  """
+  Create a new or patch an existing entity.
+  
+  Equivalent to PATCH /{tenant}/appointment/{id}
+  """
+  appointmentPatch(id: String!, requestBody: AppointmentPatchInput!, tenant: String!): AppointmentCommandResponse
+
+  """
+  Request appointment reschedule.
+  
+  Equivalent to PUT /{tenant}/appointment/{id}/reschedule
+  """
+  appointmentReschedule(id: String!, requestBody: AppointmentRescheduleRequestInput!, tenant: String!): AppointmentCommandResponse
+
+  """
+  Cancel appointment reschedule.
+  
+  Equivalent to POST /{tenant}/appointment/reschedule/{id}/cancel
+  """
+  appointmentRescheduleCancel(id: String!, tenant: String!): AppointmentCommandResponse
+
+  """
+  Confirm appointment reschedule.
+  
+  Equivalent to POST /{tenant}/appointment/reschedule/{id}/confirm
+  """
+  appointmentRescheduleConfirm(id: String!, tenant: String!): AppointmentCommandResponse
+
+  """
+  Create a new or update an existing entity.
+  
+  Equivalent to PUT /{tenant}/appointment/{id}
+  """
+  appointmentUpdate(id: String!, requestBody: AppointmentWriteInput!, tenant: String!): AppointmentCommandResponse
+
+  """
+  Authenticate with ModMedical API.
+  
+  Equivalent to POST /oauth/modmed/authenticate
+  """
+  authenticateModmed(requestBody: ModmedAuthRequestInput!): ModmedAuthResponse
+
+  """
+  Create a new entity.
+  
+  Equivalent to POST /codeSystem/
+  """
+  codeSystemCreate(requestBody: CodeSystemInput!): CodeSystemCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /codeSystem/{id}
+  """
+  codeSystemDelete(id: String!): CodeSystemCommandResponse
+
+  """
+  Create a new or update an existing entity.
+  
+  Equivalent to PUT /codeSystem/{id}
+  """
+  codeSystemUpdate(id: String!, requestBody: CodeSystemInput!): CodeSystemCommandResponse
+
+  """
+  Create a new coding.
+  
+  Equivalent to POST /codeSystem/{id}/coding
+  """
+  codingCreate(id: String!, requestBody: CodeSystemCodingInput!): CodeSystemCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /codeSystem/{id}/coding/{coding_id}
+  """
+  codingDelete(codingId: String!, id: String!): CodeSystemCommandResponse
+
+  """
+  Create a new or update an existing entity.
+  
+  Equivalent to PUT /codeSystem/{id}/coding/{coding_id}
+  """
+  codingUpdate(codingId: String!, id: String!, requestBody: CodeSystemCodingInput!): CodeSystemCommandResponse
+
+  """
+  Create a new entity.
+  
+  Equivalent to POST /{tenant}/coverage/
+  """
+  coverageCreate(requestBody: CoveragePutInput!, tenant: String!): CoverageCommandResponse
+
+  """
+  Eligibility and benefits verification.
+  
+  Equivalent to POST /{tenant}/coverage/ebv
+  """
+  coverageEbv(requestBody: CoverageEbvInputInput!, tenant: String!): CoverageEbvResult
+
+  """
+  Initiate Coverage API for a given id
+  
+  Equivalent to POST /{tenant}/coverage/{id}/initiate
+  """
+  coverageInitiate(id: String!, requestBody: CoverageInitiateInput!, tenant: String!): CoverageCommandResponse
+
+  """
+  Create a new or patch an existing entity.
+  
+  Equivalent to PATCH /{tenant}/coverage/{id}
+  """
+  coveragePatch(id: String!, requestBody: CoveragePatchInput!, tenant: String!): CoverageCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/coverage/{id}
+  """
+  coverageRemove(id: String!, tenant: String!): CoverageCommandResponse
+
+  """
+  Create a new or update an existing entity.
+  
+  Equivalent to PUT /{tenant}/coverage/{id}
+  """
+  coverageUpdate(id: String!, requestBody: CoveragePutInput!, tenant: String!): CoverageCommandResponse
+
+  """
+  Create a new entity.
+  
+  Equivalent to POST /{tenant}/device/
+  """
+  deviceCreate(requestBody: DeviceWriteInput!, tenant: String!): DeviceCommandResponse
+
+  """
+  Create a new or patch an existing entity.
+  
+  Equivalent to PATCH /{tenant}/device/{id}
+  """
+  devicePatch(id: String!, requestBody: DevicePatchInput!, tenant: String!): DeviceCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/device/{id}
+  """
+  deviceRemove(id: String!, tenant: String!): DeviceCommandResponse
+
+  """
+  Create a new device service duration.
+  
+  Equivalent to POST /{tenant}/device/{id}/serviceDuration
+  """
+  deviceServiceDurationCreate(id: String!, requestBody: DeviceServiceDurationCreateInput!, tenant: String!): DeviceCommandResponse
+
+  """
+  Create a new or patch an existing device service duration by serviceTypeCode.
+  
+  Equivalent to PATCH /{tenant}/device/{id}/serviceDuration/{serviceTypeCode}
+  """
+  deviceServiceDurationPatch(id: String!, requestBody: DeviceServiceDurationPatchInput!, serviceTypeCode: String!, tenant: String!): DeviceCommandResponse
+
+  """
+  Delete an device service duration by serviceTypeCode.
+  
+  Equivalent to DELETE /{tenant}/device/{id}/serviceDuration/{serviceTypeCode}
+  """
+  deviceServiceDurationRemove(id: String!, serviceTypeCode: String!, tenant: String!): DeviceCommandResponse
+
+  """
+  Create a new or update an existing entity.
+  
+  Equivalent to PUT /{tenant}/device/{id}
+  """
+  deviceUpdate(id: String!, requestBody: DeviceWriteInput!, tenant: String!): DeviceCommandResponse
+
+  """
+  Create a new entity.
+  
+  Equivalent to POST /{tenant}/document/
+  """
+  documentCreate(requestBody: DocumentCreateInput!, tenant: String!): DocumentCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/document/{id}
+  """
+  documentDelete(id: String!, tenant: String!): DocumentCommandResponse
+
+  """
+  Extract the data by ID.
+  
+  Equivalent to POST /{tenant}/document/{id}/extract
+  """
+  documentExtractDataFromDocument(id: String!, tenant: String!): JSON
+
+  """
+  Send Fax using document id
+  
+  Equivalent to POST /{tenant}/document/{id}/sendFax
+  """
+  documentFaxSend(id: String!, requestBody: DocumentFaxInput!, tenant: String!): DocumentFaxResponse
+
+  """
+  Create a new or update an existing entity.
+  
+  Equivalent to PATCH /{tenant}/document/{id}
+  """
+  documentUpdate(id: String!, requestBody: DocumentPatchInput!, tenant: String!): DocumentCommandResponse
+
+  """
+  Create a new entity.
+  
+  Equivalent to POST /{tenant}/estimate/
+  """
+  estimateCreate(requestBody: EstimateInput!, tenant: String!): EstimateCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/estimate/{id}
+  """
+  estimateDelete(id: String!, tenant: String!): EstimateCommandResponse
+
+  """
+  Create a new or update an existing entity.
+  
+  Equivalent to PUT /{tenant}/estimate/{id}
+  """
+  estimateUpdate(id: String!, requestBody: EstimateInput!, tenant: String!): EstimateCommandResponse
+
+  """
+  Create a new fax outreach.
+  
+  Equivalent to POST /{tenant}/faxOutreach/
+  """
+  faxOutreachCreate(requestBody: FaxOutreachRequestInput!, tenant: String!): FaxOutreachCommandResponse
+
+  """
+  Create a new fax outreach rule.
+  
+  Equivalent to POST /{tenant}/faxOutreach/rule
+  """
+  faxOutreachRuleCreate(requestBody: FaxOutreachRuleRequestInput!, tenant: String!): FaxOutreachCommandResponse
+
+  """
+  Remove a fax outreach rule.
+  
+  Equivalent to DELETE /{tenant}/faxOutreach/rule/{id}
+  """
+  faxOutreachRuleRemove(id: String!, tenant: String!): FaxOutreachCommandResponse
+
+  """
+  Create a new entity.
+  
+  Equivalent to POST /{tenant}/feeSchedule/
+  """
+  feeScheduleCreate(requestBody: FeeScheduleWriteInput!, tenant: String!): FeeScheduleCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/feeSchedule/{id}
+  """
+  feeScheduleDelete(id: String!, tenant: String!): FeeScheduleCommandResponse
+
+  """
+  Create a new entity.
+  
+  Equivalent to POST /{tenant}/feeSchedule/{id}/fees
+  """
+  feeScheduleFeesCreate(id: String!, requestBody: FeeScheduleFeesWriteInput!, tenant: String!): FeeScheduleCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/feeSchedule/{id}/fees/{feeId}
+  """
+  feeScheduleFeesDelete(feeId: String!, id: String!, tenant: String!): FeeScheduleCommandResponse
+
+  """
+  Create a new or update an existing Fees entity.
+  
+  Equivalent to PUT /{tenant}/feeSchedule/{id}/fees/{feeId}
+  """
+  feeScheduleFeesUpdate(feeId: String!, id: String!, requestBody: FeeScheduleFeesWriteInput!, tenant: String!): FeeScheduleCommandResponse
+
+  """
+  Create a new or update an existing entity.
+  
+  Equivalent to PUT /{tenant}/feeSchedule/{id}
+  """
+  feeScheduleUpdate(id: String!, requestBody: FeeScheduleWriteInput!, tenant: String!): FeeScheduleCommandResponse
+
+  """
+  Provide an access token for AthenaHealth API.
+  
+  Equivalent to POST /oauth/athena/token
+  """
+  fetchAthenaToken(requestBody: AthenaTokenRequestInput!): AthenaTokenResponse
+
+  """
+  Provide an access token for Epic API.
+  
+  Equivalent to POST /oauth/epic/token
+  """
+  fetchEpicToken: EpicTokenResponse
+
+  """
+  Provide an access token for ModMed API.
+  
+  Equivalent to POST /oauth/modmed/token
+  """
+  fetchModmedToken(requestBody: ModmedTokenRequestInput!): ModmedTokenResponse
+
+  """
+  Create a new entity.
+  
+  Equivalent to POST /{tenant}/flow/
+  """
+  flowCreate(requestBody: FlowWriteInput!, tenant: String!): FlowCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/flow/{id}
+  """
+  flowDelete(id: String!, tenant: String!): FlowCommandResponse
+
+  """
+  Create a new or update an existing entity.
+  
+  Equivalent to PUT /{tenant}/flow/{id}
+  """
+  flowUpdate(id: String!, requestBody: FlowWriteInput!, tenant: String!): FlowCommandResponse
+
+  """
+  Create a new entity.
+  
+  Equivalent to POST /{tenant}/location/
+  """
+  locationCreate(requestBody: LocationWriteInput!, tenant: String!): LocationCommandResponse
+
+  """
+  Create a new or patch an existing entity.
+  
+  Equivalent to PATCH /{tenant}/location/{id}
+  """
+  locationPatch(id: String!, requestBody: LocationPatchInput!, tenant: String!): LocationCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/location/{id}
+  """
+  locationRemove(id: String!, tenant: String!): LocationCommandResponse
+
+  """
+  Create a new or update an existing entity.
+  
+  Equivalent to PUT /{tenant}/location/{id}
+  """
+  locationUpdate(id: String!, requestBody: LocationWriteInput!, tenant: String!): LocationCommandResponse
+
+  """
+  Create a new entity.
+  
+  Equivalent to POST /{tenant}/lookup/authRequirement
+  """
+  lookupCreate(requestBody: LookupWriteInput!, tenant: String!): LookupAuthRequirementCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/lookup/authRequirement/{id}
+  """
+  lookupDelete(id: String!, tenant: String!): LookupAuthRequirementCommandResponse
+
+  """
+  Create a new or update an existing entity.
+  
+  Equivalent to PUT /{tenant}/lookup/authRequirement/{id}
+  """
+  lookupUpdate(id: String!, requestBody: LookupWriteInput!, tenant: String!): LookupAuthRequirementCommandResponse
+
+  """
+  Create a new entity.
+  
+  Equivalent to POST /{tenant}/order/
+  """
+  orderCreate(requestBody: OrderWriteInput!, tenant: String!): OrderCommandResponse
+
+  """
+  Ingest resource
+  
+  Equivalent to POST /{tenant}/order/ingest
+  """
+  orderIngest(requestBody: OrderIngestInput!, tenant: String!): OrderIngestResponse
+
+  """
+  Create a new contract.
+  
+  Equivalent to POST /{tenant}/organization/{id}/contract
+  """
+  organizationContractCreate(id: String!, requestBody: OrganizationContractWriteInput!, tenant: String!): OrganizationCommandResponse
+
+  """
+  Create Or Patch contract.
+  
+  Equivalent to PATCH /{tenant}/organization/{id}/contract/{contractId}
+  """
+  organizationContractPatch(contractId: String!, id: String!, requestBody: OrganizationContractPatchInput!, tenant: String!): OrganizationCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/organization/{id}/contract/{contractId}
+  """
+  organizationContractRemove(contractId: String!, id: String!, tenant: String!): OrganizationCommandResponse
+
+  """
+  Create a new entity.
+  
+  Equivalent to POST /{tenant}/organization/
+  """
+  organizationCreate(requestBody: OrganizationWriteInput!, tenant: String!): OrganizationCommandResponse
+
+  """
+  Create a new fee schedule.
+  
+  Equivalent to POST /{tenant}/organization/{id}/feeSchedule
+  """
+  organizationFeeScheduleCreate(id: String!, requestBody: OrganizationFeeScheduleWriteInput!, tenant: String!): OrganizationCommandResponse
+
+  """
+  Create a new or patch an existing entity.
+  
+  Equivalent to PATCH /{tenant}/organization/{id}/feeSchedule/{feeSchedule}
+  """
+  organizationFeeSchedulePatch(feeSchedule: String!, id: String!, requestBody: OrganizationFeeSchedulePatchInput!, tenant: String!): OrganizationCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/organization/{id}/feeSchedule/{feeSchedule}
+  """
+  organizationFeeScheduleRemove(feeSchedule: String!, id: String!, tenant: String!): OrganizationCommandResponse
+
+  """
+  Create a new or update an existing entity.
+  
+  Equivalent to PUT /{tenant}/organization/{id}/feeSchedule/{feeSchedule}
+  """
+  organizationFeeScheduleUpdatedUpdate(feeSchedule: String!, id: String!, requestBody: OrganizationFeeScheduleWriteInput!, tenant: String!): OrganizationCommandResponse
+
+  """
+  Create a new or patch an existing entity.
+  
+  Equivalent to PATCH /{tenant}/organization/{id}
+  """
+  organizationPatch(id: String!, requestBody: OrganizationPatchInput!, tenant: String!): OrganizationCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/organization/{id}
+  """
+  organizationRemove(id: String!, tenant: String!): OrganizationCommandResponse
+
+  """
+  Create a new or update an existing entity.
+  
+  Equivalent to PUT /{tenant}/organization/{id}
+  """
+  organizationUpdate(id: String!, requestBody: OrganizationWriteInput!, tenant: String!): OrganizationCommandResponse
+
+  """
+  Create a new entity.
+  
+  Equivalent to POST /{tenant}/patient/
+  """
+  patientCreate(requestBody: PatientWriteInput!, tenant: String!): PatientCommandResponse
+
+  """
+  Create a new or patch an existing entity.
+  
+  Equivalent to PATCH /{tenant}/patient/{id}
+  """
+  patientPatch(id: String!, requestBody: PatientPatchInput!, tenant: String!): PatientCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/patient/{id}
+  """
+  patientRemove(id: String!, tenant: String!): PatientCommandResponse
+
+  """
+  Create a new or update an existing entity.
+  
+  Equivalent to PUT /{tenant}/patient/{id}
+  """
+  patientUpdate(id: String!, requestBody: PatientWriteInput!, tenant: String!): PatientCommandResponse
+
+  """
+  Create a new entity.
+  
+  Equivalent to POST /{tenant}/practitioner/
+  """
+  practitionerCreate(requestBody: PractitionerWriteInput!, tenant: String!): PractitionerCommandResponse
+
+  """
+  Create a new or patch an existing entity.
+  
+  Equivalent to PATCH /{tenant}/practitioner/{id}
+  """
+  practitionerPatch(id: String!, requestBody: PractitionerPatchInput!, tenant: String!): PractitionerCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/practitioner/{id}
+  """
+  practitionerRemove(id: String!, tenant: String!): PractitionerCommandResponse
+
+  """
+  Create a new or update an existing entity.
+  
+  Equivalent to PUT /{tenant}/practitioner/{id}
+  """
+  practitionerUpdate(id: String!, requestBody: PractitionerWriteInput!, tenant: String!): PractitionerCommandResponse
+
+  """
+  update a prior auth to get auth Requirement
+  
+  Equivalent to POST /{tenant}/priorAuth/{id}/coverage/{coverage}/authRequirement
+  """
+  priorAuthAuthRequirementInitiate(coverage: String!, id: String!, tenant: String!): PriorAuthCommandResponse
+
+  """
+  Initiate a prior auth to get auth status
+  
+  Equivalent to POST /{tenant}/priorAuth/{id}/coverage/{coverage}/authStatus
+  """
+  priorAuthAuthStatusInitiate(coverage: String!, id: String!, requestBody: PriorAuthAuthstatusInitiateInput!, tenant: String!): PriorAuthCommandResponse
+
+  """
+  Patch a coverage.
+  
+  Equivalent to PATCH /{tenant}/priorAuth/{id}/coverage/{coverage}
+  """
+  priorAuthCoveragePatch(coverage: String!, id: String!, requestBody: PriorAuthCoveragePatchInput!, tenant: String!): PriorAuthCommandResponse
+
+  """
+  Create a new entity.
+  
+  Equivalent to POST /{tenant}/priorAuth/
+  """
+  priorAuthCreate(requestBody: PriorAuthWriteInput!, tenant: String!): PriorAuthCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/priorAuth/{id}
+  """
+  priorAuthDelete(id: String!, tenant: String!): PriorAuthCommandResponse
+
+  """
+  Indicate that the prior auth information was added.
+  
+  Equivalent to POST /{tenant}/priorAuth/{id}/information-added
+  """
+  priorAuthInformationAdded(id: String!, tenant: String!): PriorAuthCommandResponse
+
+  """
+  Initiate a prior auth.
+  
+  Equivalent to POST /{tenant}/priorAuth/{id}/initiate
+  """
+  priorAuthInitiate(id: String!, requestBody: PriorAuthInitiateInput!, tenant: String!): PriorAuthCommandResponse
+
+  """
+  Create a new or patch an existing entity.
+  
+  Equivalent to PATCH /{tenant}/priorAuth/{id}
+  """
+  priorAuthPatch(id: String!, requestBody: PriorAuthPatchInput!, tenant: String!): PriorAuthCommandResponse
+
+  """
+  Create a new entity.
+  
+  Equivalent to POST /{tenant}/schedule/
+  """
+  scheduleCreate(requestBody: ScheduleWriteInput!, tenant: String!): ScheduleCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/schedule/{id}
+  """
+  scheduleDelete(id: String!, tenant: String!): ScheduleCommandResponse
+
+  """
+  Create a new slots entity.
+  
+  Equivalent to POST /{tenant}/schedule/slots
+  """
+  scheduleSlotsCreate(requestBody: ScheduleSlotsInput!, tenant: String!): ScheduleCommandResponse
+
+  """
+  Creates a new or updates existing slots entity.
+  
+  Equivalent to PUT /{tenant}/schedule/slots/{id}
+  """
+  scheduleSlotsUpdate(id: String!, requestBody: ScheduleSlotsInput!, tenant: String!): ScheduleCommandResponse
+
+  """
+  Create a new or update an existing entity.
+  
+  Equivalent to PUT /{tenant}/schedule/{id}
+  """
+  scheduleUpdate(id: String!, requestBody: ScheduleWriteInput!, tenant: String!): ScheduleCommandResponse
+
+  """
+  Create a new entity.
+  
+  Equivalent to POST /{tenant}/sync/
+  """
+  syncCreate(requestBody: SyncWriteInput!, tenant: String!): SyncCommandResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/sync/{id}
+  """
+  syncDelete(id: String!, tenant: String!): SyncCommandResponse
+
+  """
+  Create or Patch entity.
+  
+  Equivalent to PATCH /{tenant}/sync/{id}
+  """
+  syncPatch(id: String!, requestBody: SyncPatchInput!, tenant: String!): SyncCommandResponse
+
+  """
+  Create a new or update an existing entity.
+  
+  Equivalent to PUT /{tenant}/sync/{id}
+  """
+  syncUpdate(id: String!, requestBody: SyncWriteInput!, tenant: String!): SyncCommandResponse
+
+  """
+  Send Nudge Outreach
+  
+  Equivalent to POST /{tenant}/textOutreach/nudge
+  """
+  textOutreachNudge(requestBody: TextOutreachCommandInput!, tenant: String!): TextOutreachCommandResponse
+
+  """
+  Send Reschedule Failed Outreach
+  
+  Equivalent to POST /{tenant}/textOutreach/rescheduleFailed
+  """
+  textOutreachRescheduleFailed(requestBody: TextOutreachCommandInput!, tenant: String!): TextOutreachCommandResponse
+
+  """
+  Send Reschedule Success Outreach
+  
+  Equivalent to POST /{tenant}/textOutreach/rescheduleSuccess
+  """
+  textOutreachRescheduleSuccess(requestBody: TextOutreachCommandInput!, tenant: String!): TextOutreachCommandResponse
+
+  """
+  Create a new nudge URL.
+  
+  Equivalent to POST /url/nudge
+  """
+  urlNudgeCreate(requestBody: UrlNudgeInput!): UrlNudgeCommandResponse
+
+  """
+  Delete a nudge URL.
+  
+  Equivalent to DELETE /url/nudge/{id}
+  """
+  urlNudgeDelete(id: String!): UrlNudgeCommandResponse
+
+  """
+  Create a new or Patch an existing nudge URL.
+  
+  Equivalent to PATCH /url/nudge/{id}
+  """
+  urlNudgePatch(id: String!, requestBody: UrlNudgeInput!): UrlNudgeCommandResponse
+
+  """
+  Create a new or update an existing nudge URL.
+  
+  Equivalent to PUT /url/nudge/{id}
+  """
+  urlNudgeUpdate(id: String!, requestBody: UrlNudgeInput!): UrlNudgeCommandResponse
+
+  """
+  Create a new user.
+  
+  Equivalent to POST /{tenant}/user/
+  """
+  userCreate(requestBody: UserCreateInput!, tenant: String!): UserCommandResponse
+
+  """
+  Create temporary AWS credentials.
+  
+  Equivalent to POST /{tenant}/user/credentials
+  """
+  userCreateCredentials(requestBody: UserCreateCredentialsInput!, tenant: String!): UserCreateCredentialsResponse
+
+  """
+  Delete an entity.
+  
+  Equivalent to DELETE /{tenant}/user/{username}
+  """
+  userDelete(tenant: String!, username: String!): UserCommandResponse
+
+  """
+  Update an existing user.
+  
+  Equivalent to PUT /{tenant}/user/{username}
+  """
+  userUpdate(requestBody: UserUpdateInput!, tenant: String!, username: String!): UserCommandResponse
+}
+
+type TextDBQueryListResponse {
+  resources: [JSON]!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type AppointmentQueryListResponse {
+  pages: Int!
+  resources: [Appointment]!
+}
+
+type Appointment {
+  basedOn: String
+  bookedStamp: String
+  cancelationReason: String
+  comment: String
+  created: String
+  description: String
+  device: String
+  endTime: String
+  generated: String
+  id: String!
+  location: String
+  metadata: AppointmentMetadata
+  minutesDuration: Float
+  patient: String!
+  patientInstruction: String
+  pendingBooking: AppointmentReschedule
+  reasonCode: AppointmentReasonCode
+  serviceCategory: AppointmentServiceCategory
+  serviceType: AppointmentServiceType!
+  slot: String
+  specialty: String
+  startTime: String
+  status: AppointmentStatus
+  statusStamp: String
+  tag: String
+  tenant: String
+  updated: String
+  visit: String!
+  patientRead: PatientQueryReadResponse
+  coverageList(limit: Int, page: Int, tag: String, visit: String): CoverageQueryListResponse
+  locationRead: LocationQueryReadResponse
+  deviceRead: DeviceQueryReadResponse
+  textOutreachList(limit: Int, page: Int, visit: String): TextOutreachQueryListResponse
+  priorAuthList: PriorAuthQueryListResponse
+}
+
+type AppointmentMetadata {
+  authEndDate: String
+  authStartDate: String
+  authStatus: String
+  id: String
+  lastCompletedOn: String
+}
+
+type AppointmentReschedule {
+  appointment: String!
+  created: String
+  endTime: String!
+  id: String!
+  startTime: String!
+  status: AppointmentRescheduleStatus!
+  tenant: String!
+}
+
+enum AppointmentRescheduleStatus {
+  pending
+  booked
+  canceled
+}
+
+type AppointmentReasonCode {
+  coding: String
+  text: String
+}
+
+type AppointmentServiceCategory {
+  coding: String
+  text: String
+}
+
+type AppointmentServiceType {
+  coding: String!
+  text: String
+}
+
+enum AppointmentStatus {
+  bookingPending
+  booked
+  canceled
+  arrived
+  checked_in
+  completed
+  pending
+}
+
+enum Order2 {
+  asc
+  desc
+}
+
+enum OrderBy {
+  created
+  updated
+  startTime
+}
+
+enum RescheduleStatus {
+  pending
+  booked
+  canceled
+}
+
+enum Status {
+  bookingPending
+  booked
+  canceled
+  arrived
+  checked_in
+  completed
+  pending
+}
+
+type AppointmentHistoryQueryMetricResponse {
+  resource: AppointmentMetrics
+  resources: [AppointmentMetrics]
+}
+
+type AppointmentMetrics {
+  date: String
+  location: String
+  modality: String
+  occurrences: Float
+  status: String
+  tenant: String
+}
+
+type AppointmentQueryReadResponse {
+  id: String!
+  resource: Appointment!
+}
+
+type AppointmentRescheduleQueryListResponse {
+  pages: Int!
+  resources: [AppointmentReschedule]!
+}
+
+enum Order3 {
+  asc
+  desc
+}
+
+enum OrderBy2 {
+  created
+  startTime
+}
+
+type CodeSystemQueryListResponse {
+  pages: Float!
+  resources: [CodeSystem]!
+}
+
+type CodeSystem {
+  coding: [CodeSystemCoding]
+  created: String
+  id: String
+  system: String!
+  systemType: String
+  tenant: String
+  updated: String
+}
+
+type CodeSystemCoding {
+  code: String
+  created: String
+  display: String
+  id: String
+  metadata: JSON
+  parentId: String
+  type: String
+  updated: String
+}
+
+enum Order4 {
+  asc
+  desc
+}
+
+enum OrderBy3 {
+  created
+  updated
+}
+
+type CodeSystemQueryReadResponse {
+  resource: CodeSystem!
+}
+
+type CodingQueryListResponse {
+  pages: Float!
+  resources: [CodeSystemCoding]!
+}
+
+type CodingQueryReadResponse {
+  resource: CodeSystemCoding!
+}
+
+type CoverageQueryListResponse {
+  pages: Int!
+  resources: [Coverage2]!
+}
+
+type Coverage2 {
+  beneficiary: String
+  benefits: CoverageSchemaBenefits
+  coverageCheckedAt: String
+  groupNumber: String
+  id: String!
+  payor: String
+  status: CoverageStatus
+  subscriberId: String
+  tag: String
+  tenant: String
+  updated: String
+  visit: String
+  organizationRead: OrganizationQueryReadResponse
+}
+
+type CoverageSchemaBenefits {
+  coInsurance: Float
+  coPayment: Float
+  estimatedDeductibles: Float
+  estimatedOutOfPocket: Float
+  totalDeductibles: Float
+  totalOutOfPocket: Float
+}
+
+enum CoverageStatus {
+  Pending
+  Initiated
+  ActiveCoverage
+  NoCoverage
+  PayorNotActivated
+  Error
+  InTransition
+}
+
+enum Order5 {
+  asc
+  desc
+}
+
+enum OrderBy4 {
+  created
+  updated
+}
+
+type CoverageQueryListTransactionResponse {
+  pages: Int
+  resources: [CoverageTransactions]
+}
+
+type CoverageTransactions {
+  coverageId: String
+  created: String
+  id: String!
+  initiatedBy: String
+  payorId: String
+  requestJson: JSON
+  responseEdi: JSON
+  responseJson: JSON
+  serviceType: [String]
+  status: CoverageStatus
+  updated: String
+}
+
+type CoverageMetricsListResponse {
+  resources: [CoverageMetrics]
+}
+
+type CoverageMetrics {
+  benefits: Float
+  coverageIds: JSON
+  date: String
+  error: String
+  occurrences: Float
+  payor: String
+  payorNotActivated: Float
+  status: String
+  tenant: String
+  organizationRead: OrganizationQueryReadResponse
+}
+
+type CoverageQueryReadResponse {
+  id: String!
+  resource: Coverage2!
+}
+
+type CoverageBenefitsResponse {
+  id: String
+  resource: CoverageBenefitsItem
+}
+
+type CoverageBenefitsItem {
+  benefits: JSON
+  payorId: String
+}
+
+type CoverageEdiResponse {
+  id: String
+  resources: [CoverageEdi]
+}
+
+type CoverageEdi {
+  data: JSON
+  payorId: String
+  soapData: String
+}
+
+type CoverageQueryReadTransactionResponse {
+  id: String!
+  resource: CoverageTransactions!
+}
+
+type DeviceQueryListResponse {
+  pages: Float
+  resources: [Device]
+}
+
+type Device {
+  id: String!
+  location: String
+  manufacturer: String!
+  metadata: DeviceMetadata
+  name: DeviceName!
+  note: String
+  owner: String!
+  status: DeviceStatus
+  statusReason: String
+  tag: String
+  tenant: String
+  type: String!
+  updatedAt: Float
+  locationRead: LocationQueryReadResponse
+}
+
+type DeviceMetadata {
+  defaultDurationMinutes: Float
+  id: String
+  modality: String
+  nudgeable: Boolean
+}
+
+type DeviceName {
+  name: String!
+  type: String!
+}
+
+enum DeviceStatus {
+  active
+  inactive
+  unknown
+  entered_in_error
+}
+
+enum Order6 {
+  asc
+  desc
+}
+
+enum OrderBy5 {
+  created
+  updated
+}
+
+type DeviceQueryReadResponse {
+  id: String!
+  resource: Device!
+}
+
+type DeviceServiceDurationQueryListResponse {
+  pages: Float
+  resources: [DeviceServiceDuration]
+}
+
+type DeviceServiceDuration {
+  created: String
+  durationMinutes: Int!
+  id: String!
+  isAvailable: Boolean
+  nudgeEligible: Boolean
+  parentId: String!
+  serviceCategory: String
+  serviceTypeCode: String!
+  updated: String
+}
+
+type DeviceServiceDurationQueryReadResponse {
+  resource: DeviceServiceDuration!
+  serviceTypeCode: String!
+}
+
+type DocumentQueryListResponse {
+  pages: Int!
+  resources: [Document]!
+}
+
+type Document {
+  actionRequired: Boolean
+  appointment: String
+  created: String
+  documentType: String
+  extractFile: String
+  extractStatus: String
+  extractText: String
+  file: String!
+  fileName: String!
+  fileType: String
+  id: String!
+  outboundFaxes: [DocumentOutboundFaxes]
+  patient: String
+  patientBirthDate: String
+  patientFirstName: String
+  patientLastName: String
+  patientPhoneNumber: String
+  source: String
+  tag: String
+  tenant: String
+  updated: String
+  visit: String
+}
+
+type DocumentOutboundFaxes {
+  comments: String
+  created: String
+  documentId: String
+  faxNumber: String
+  faxReferenceId: String
+  id: String
+  status: DocumentOutboundFaxesStatus
+  updated: String
+}
+
+enum DocumentOutboundFaxesStatus {
+  initiated
+  transmitting
+  success
+  failed
+}
+
+enum Order7 {
+  asc
+  desc
+}
+
+enum OrderBy6 {
+  created
+  updated
+}
+
+type DocumentQueryReadResponse {
+  id: String!
+  resource: Document!
+}
+
+type DocumentQueryReadImage {
+  resource: String!
+}
+
+type DownloadDesktop {
+  date: String!
+  sha512: String!
+  size: Float!
+  url: String!
+  version: String!
+}
+
+type EstimateQueryListResponse {
+  pages: Float!
+  resources: [Estimate]!
+}
+
+type Estimate {
+  coverage: [EstimateCoverage]
+  created: String
+  patientResponsibility: Int
+  status: String
+  totalAllowedAmount: Int
+  updated: String
+  visit: String!
+}
+
+type EstimateCoverage {
+  benefits: EstimateBenefits
+  coverageId: String!
+  fees: [EstimateFees]
+  id: String
+  visit: String
+}
+
+type EstimateBenefits {
+  coinsurance: Float
+  copayment: Int
+  coverageOrder: EstimateCoverageOrder
+  deductibleRemaining: Int
+  network: String
+  outOfPocketRemaining: Int
+}
+
+enum EstimateCoverageOrder {
+  primary
+  secondary
+  tertiary
+}
+
+type EstimateFees {
+  allowedAmount: Int
+  appointmentId: String!
+  id: String
+  location: String
+  serviceType: EstimateFeesServiceType
+}
+
+type EstimateFeesServiceType {
+  coding: String!
+  description: String
+}
+
+enum Order8 {
+  asc
+  desc
+}
+
+enum OrderBy7 {
+  created
+  updated
+}
+
+type EstimateQueryReadResponse {
+  id: String!
+  resource: Estimate!
+}
+
+type FaxOutreachQueryListResponse {
+  pages: Int!
+  resources: [FaxOutreach]!
+}
+
+type FaxOutreach {
+  caller: String!
+  created: String
+  id: String!
+  intent: FaxOutreachIntent!
+  payload: FaxOutreachPayload
+  practitioner: String!
+  status: FaxOutreachStatus!
+  target: String!
+  template: String!
+  tenant: String!
+  updated: String
+  user: String
+  visit: String!
+  userReadById: UserQueryReadResponse
+}
+
+enum FaxOutreachIntent {
+  RequestForOrder
+  RequestToInitiate
+  RequestForClinicals
+}
+
+type FaxOutreachPayload {
+  patientFirstName: String
+  patientLastName: String
+}
+
+enum FaxOutreachStatus {
+  pending
+  success
+  failure
+}
+
+enum Intent {
+  RequestForOrder
+  RequestToInitiate
+  RequestForClinicals
+}
+
+enum Order9 {
+  asc
+  desc
+}
+
+enum OrderBy8 {
+  created
+  updated
+}
+
+enum Status2 {
+  pending
+  success
+  failure
+}
+
+type FaxOutreachQueryReadResponse {
+  id: String!
+  resource: FaxOutreach!
+}
+
+type FaxOutreachRuleQueryListResponse {
+  pages: Int!
+  resources: [FaxOutreachRule]!
+}
+
+type FaxOutreachRule {
+  created: String
+  id: String!
+  intent: FaxOutreachIntent!
+  practitioner: String!
+  tenant: String!
+  updated: String
+}
+
+enum Order10 {
+  asc
+  desc
+}
+
+enum OrderBy9 {
+  created
+}
+
+type FeeScheduleFeesQueryListResponse {
+  pages: Int!
+  resources: [FeeScheduleFees]!
+}
+
+type FeeScheduleFees {
+  amount: Float!
+  created: String
+  effectiveDate: String
+  feeScheduleId: String
+  id: String!
+  serviceTypeCode: String!
+  tenant: String
+  updated: String
+}
+
+enum Order11 {
+  asc
+  desc
+}
+
+enum OrderBy10 {
+  created
+  updated
+}
+
+type FeeScheduleFeesQueryReadResponse {
+  id: String!
+  resource: FeeScheduleFees!
+}
+
+type FeeScheduleQueryListResponse {
+  pages: Int!
+  resources: [FeeSchedule]!
+}
+
+type FeeSchedule {
+  created: String
+  fees: [FeeScheduleFees]
+  id: String!
+  name: String!
+  tenant: String
+  updated: String
+}
+
+type FeeScheduleQueryReadResponse {
+  id: String!
+  resource: FeeSchedule!
+}
+
+type FlowQueryListResponse {
+  pages: Int!
+  resources: [Flow]!
+}
+
+type Flow {
+  appointmentId: String
+  appointmentStart: String
+  appointmentStatus: AppointmentStatus
+  created: String
+  deviceId: String
+  doNotContact: Boolean
+  id: String
+  modified: String
+  patientId: String
+  priorAuthEnd: String
+  priorAuthStart: String
+  priorAuthStatus: String
+  serviceCategory: AppointmentServiceCategory
+  serviceType: AppointmentServiceType
+  tenant: String
+  visitId: String
+}
+
+enum Order12 {
+  asc
+  desc
+}
+
+enum OrderBy11 {
+  created
+  modified
+}
+
+type FlowQueryReadResponse {
+  id: String!
+  resource: Flow!
+}
+
+type LocationQueryListResponse {
+  pages: Float!
+  resources: [Location]
+}
+
+type Location {
+  address: String
+  alias: String
+  description: String
+  id: String!
+  managingOrganization: String
+  name: String!
+  npi: String
+  partOf: String
+  status: String
+  tag: String
+  taxId: String
+  telecom: [LocationTelecom]
+  tenant: String
+  type: String
+  updatedAt: Float
+}
+
+type LocationTelecom {
+  rank: Float
+  system: String
+  use: String
+  value: String
+}
+
+enum Order13 {
+  asc
+  desc
+}
+
+enum OrderBy12 {
+  created
+  updated
+}
+
+type LocationQueryReadResponse {
+  id: String!
+  resource: Location!
+}
+
+type LookupQueryListAuthRequirementResponse {
+  pages: Int!
+  resources: [LookupAuthRequirement]
+}
+
+type LookupAuthRequirement {
+  created: String
+  description: String
+  ediId: String
+  exclusions: [LookupAuthRequirementExclusions]
+  groupNumber: String
+  id: String!
+  isAuthRequired: Boolean!
+  organizationName: String
+  ruleType: LookupRuleType
+  serviceType: LookupAuthRequirementServiceType!
+  subscriberPrefix: String
+  susanOutput: String
+  updated: String
+}
+
+type LookupAuthRequirementExclusions {
+  excludeEdiId: String
+  excludeGroupNumber: String
+  excludeOrganizationName: String
+  excludeServiceTypeCoding: String
+  excludeSubscriberPrefix: String
+  id: String
+  parentId: String
+}
+
+enum LookupRuleType {
+  global
+  local
+}
+
+type LookupAuthRequirementServiceType {
+  coding: String!
+  text: String
+}
+
+input ServiceType2Input {
+  coding: String
+  text: String
+}
+
+type LookupQueryReadAuthRequrimentResponse {
+  resource: LookupAuthRequirement!
+}
+
+type LookupqueryAuthRequirementValidationResponse {
+  resource: LookupauthRequirementValidation!
+}
+
+type LookupauthRequirementValidation {
+  description: String
+  isAuthRequired: Boolean
+}
+
+type OrderQueryListResponse {
+  pages: Float!
+  resources: [Order]
+}
+
+type Order {
+  appointment: String
+  callbackUrl: String
+  coverage: [String]
+  created: String!
+  documentId: String
+  id: String!
+  location: String
+  patient: String
+  practitioner: String
+  priorAuth: String!
+  runCoverage: Boolean
+  runPriorAuthCheck: Boolean
+  runPriorAuthConfirmation: Boolean
+  runPriorAuthSubmission: Boolean
+  tenant: String!
+  updated: String!
+  visit: String
+}
+
+enum Order14 {
+  asc
+  desc
+}
+
+enum OrderBy13 {
+  created
+  updated
+}
+
+type OrderQueryReadResponse {
+  id: String!
+  resource: Order!
+}
+
+type OrganizationContractQueryListResponse {
+  pages: Float!
+  resources: [OrganizationContract]!
+}
+
+type OrganizationContract {
+  created: String
+  feeSchedule: String!
+  id: String
+  location: String!
+  multiplier: Float!
+  organization: String
+  tenant: String
+  updated: String
+  locationRead: LocationQueryReadResponse
+  feeScheduleRead: FeeScheduleQueryReadResponse
+}
+
+enum Order17 {
+  asc
+  desc
+}
+
+enum OrderBy16 {
+  created
+  updated
+}
+
+type OrganizationContractQueryReadResponse {
+  id: String!
+  resource: OrganizationContract!
+}
+
+type OrganizationFeeScheduleQueryListResponse {
+  pages: Float!
+  resources: [OrganizationFeeSchedule]!
+}
+
+type OrganizationFeeSchedule {
+  amount: String!
+  created: String
+  id: String!
+  location: String
+  locationName: String
+  organization: String!
+  serviceType: String!
+  updated: String
+}
+
+enum Order16 {
+  asc
+  desc
+}
+
+enum OrderBy15 {
+  created
+  updated
+}
+
+type OrganizationQueryListResponse {
+  pages: Float!
+  resources: [Organization]
+}
+
+type Organization {
+  active: Boolean
+  address: String
+  alias: String
+  contact: OrganizationContact
+  contract: [OrganizationContract]
+  id: String!
+  identifiers: [OrganizationIdentifier]
+  inNetwork: Boolean
+  isGravityAuthSupported: Boolean
+  name: String!
+  partOf: String
+  tag: String
+  telecom: String
+  tenant: String
+  type: String!
+  updatedAt: Float
+}
+
+type OrganizationContact {
+  name: String
+  telecom: String
+}
+
+type OrganizationIdentifier {
+  assigner: String
+  period: OrganizationIdentifierPeriod
+  system: String!
+  type: String
+  use: String
+  value: String!
+}
+
+type OrganizationIdentifierPeriod {
+  end: String
+  start: String
+}
+
+enum Order15 {
+  asc
+  desc
+}
+
+enum OrderBy14 {
+  created
+  updated
+}
+
+type OrganizationQueryReadResponse {
+  id: String!
+  resource: Organization!
+}
+
+type PatientQueryListResponse {
+  pages: Float!
+  resources: [Patient]
+}
+
+type Patient {
+  address: String
+  birthDate: String
+  doNotContact: Boolean
+  firstName: String
+  gender: String
+  generatedAt: String
+  id: String!
+  language: String
+  lastName: String
+  link: [String]
+  middleName: String
+  tag: String
+  telecom: [PatientTelecom]
+  tenant: String
+  updated: String
+  coverageList(limit: Int, page: Int, tag: String, visit: String): CoverageQueryListResponse
+}
+
+type PatientTelecom {
+  rank: Float
+  system: String
+  use: String
+  value: String
+}
+
+enum Order18 {
+  asc
+  desc
+}
+
+enum OrderBy17 {
+  created
+  updated
+}
+
+type PatientQueryReadResponse {
+  id: String!
+  resource: Patient!
+}
+
+type PractitionerQueryListResponse {
+  pages: Float!
+  resources: [Practitioner]
+}
+
+type Practitioner {
+  address: String
+  doNotContact: Boolean
+  firstName: String!
+  id: String!
+  isPriorAuthSubmissionEnabled: Boolean
+  lastName: String!
+  metadata: PractitionerMetadata
+  npi: String
+  speciality: String
+  tag: String
+  telecom: [PractitionerTelecom]
+  updatedAt: Float
+}
+
+type PractitionerMetadata {
+  id: String
+  nudgeable: Boolean
+}
+
+type PractitionerTelecom {
+  rank: Float
+  system: String
+  use: String
+  value: String
+}
+
+enum Order19 {
+  asc
+  desc
+}
+
+enum OrderBy18 {
+  created
+  updated
+}
+
+type PractitionerQueryReadResponse {
+  id: String!
+  resource: Practitioner!
+}
+
+type PriorAuthCoverageQueryReadResponse {
+  resource: PriorAuthCoverage!
+}
+
+type PriorAuthCoverage {
+  actionRequired: Boolean
+  actionRequiredType: PriorAuthCoverageActionRequiredType
+  authError: PriorAuthCoverageAuthError
+  authErrorCause: String
+  authNumber: String
+  authRequirement: PriorAuthCoverageActionRequirement
+  authResult: PriorAuthCoverageAuthResult
+  authRuleDescription: String
+  botName: String
+  caseReferenceNumber: String
+  clinicalsAvailable: Boolean
+  completed: String
+  coverageId: String!
+  coverageStatus: PriorAuthCoverageStatus
+  created: String
+  endDate: String
+  execution: String
+  id: String!
+  initiated: String
+  message: String
+  order: String
+  organizationId: String
+  priorAuthCoverageLinkId: String
+  retrievedByGravity: Boolean
+  startDate: String
+  submitted: String
+  submittedBy: String
+  submittedByGravity: Boolean
+  tenant: String
+  updated: String
+  coverageRead: CoverageQueryReadResponse
+}
+
+enum PriorAuthCoverageActionRequiredType {
+  ClinicalsRequired
+  IncorrectOrMissingInfo
+  ConfirmAuthRequirement
+}
+
+enum PriorAuthCoverageAuthError {
+  UnknownError
+  NetworkError
+  LoginError
+  MissingInformationError
+  ClinicalsRequired
+  WorkflowTerminated
+  ConfirmAuthRequirement
+}
+
+enum PriorAuthCoverageActionRequirement {
+  Required
+  NotRequired
+  Unknown
+  Fetching
+  ConfirmAuthRequirement
+}
+
+enum PriorAuthCoverageAuthResult {
+  CaseAuthorized
+  CaseNotStarted
+  CaseNotSupported
+  CaseDenied
+  CaseP2P
+  CoverageNoAuthRequired
+  CasePending
+  PatientNotFound
+}
+
+enum PriorAuthCoverageStatus {
+  Pending
+  Initiated
+  ActiveCoverage
+  NoCoverage
+  PayorNotActivated
+  Error
+  InTransition
+}
+
+type PriorAuthHistoryQueryListResponse {
+  resources: [PriorAuthHistory]!
+}
+
+type PriorAuthHistory {
+  coverage: String
+  event: PriorAuthHistoryEvent!
+  id: String!
+  parent: String!
+  time: String!
+}
+
+enum PriorAuthHistoryEvent {
+  PriorAuthInitiated
+  CoverageInitiated
+  CoverageActive
+  CoverageNotActive
+  CoverageNotSupported
+  CoverageError
+  CoverageNoAuthRequired
+  CoverageAuthRequired
+  CoverageAuthRequirementUnknown
+  CasePending
+  ClinicalsRequired
+  CaseAuthorized
+  CaseNotSupported
+  CaseDenied
+  CaseP2P
+  CaseNotStarted
+  MissingInformationError
+  PriorAuthQueued
+  WorkflowTerminated
+  PriorAuthHistoryDaysOut
+  SyncAcknowledged
+  SyncFailed
+  LoginError
+  NetworkError
+  UnknownError
+  ConfirmAuthRequirement
+  InputUpdated
+  PatientNotFound
+}
+
+type PriorAuthQueryListResponse {
+  pages: Float!
+  resources: [PriorAuth]!
+}
+
+type PriorAuth {
+  appointmentId: String
+  appointmentStart: String
+  appointmentStatus: PriorAuthAppointmentStatus
+  authStatus: PriorAuthAuthStatus
+  coverage: [PriorAuthCoverage]
+  device: String
+  forceInitiate: Boolean
+  generated: String
+  id: String
+  isPriorAuthSubmissionEnabled: Boolean
+  location: String
+  metadata: PriorAuthMetadata
+  mockScenarioId: String
+  patientId: String
+  practitioner: PriorAuthPractitioner
+  serviceCategory: PriorAuthServiceCategory
+  serviceType: PriorAuthServiceType
+  tag: String
+  tenant: String
+  updated: String
+  visit: String
+  patientRead: PatientQueryReadResponse
+  practitionerRead: PractitionerQueryReadResponse
+  appointmentRead: AppointmentQueryReadResponse
+  documentList: DocumentQueryListResponse
+}
+
+enum PriorAuthAppointmentStatus {
+  bookingPending
+  booked
+  canceled
+  arrived
+  checked_in
+  completed
+  pending
+}
+
+enum PriorAuthAuthStatus {
+  pending
+  running
+  complete
+  failed
+  action_required
+}
+
+type PriorAuthMetadata {
+  gravityAuthEnabled: Boolean
+  id: String
+  toReview: Boolean
+}
+
+type PriorAuthPractitioner {
+  id: String
+}
+
+type PriorAuthServiceCategory {
+  coding: String
+  text: String
+}
+
+type PriorAuthServiceType {
+  coding: String!
+  text: String
+}
+
+enum AppointmentStatus2 {
+  bookingPending
+  booked
+  canceled
+  arrived
+  checked_in
+  completed
+  pending
+}
+
+enum AuthStatus {
+  pending
+  running
+  complete
+  failed
+  action_required
+}
+
+enum CoverageStatus2 {
+  Pending
+  Initiated
+  ActiveCoverage
+  NoCoverage
+  PayorNotActivated
+  Error
+  InTransition
+}
+
+enum Order20 {
+  asc
+  desc
+}
+
+enum OrderBy19 {
+  appointmentStart
+  appointmentStatus
+  authStatus
+  created
+  updated
+}
+
+enum PriorAuthStatus {
+  CaseAuthorized
+  CaseNotStarted
+  CaseNotSupported
+  CaseDenied
+  CaseP2P
+  CoverageNoAuthRequired
+  CasePending
+  PatientNotFound
+  UnknownError
+  NetworkError
+  LoginError
+  MissingInformationError
+  ClinicalsRequired
+  WorkflowTerminated
+  ConfirmAuthRequirement
+}
+
+type PriorAuthHistoryQueryMetricResponse {
+  resource: JSON
+  resources: [PriorAuthMetrics]
+}
+
+type PriorAuthMetrics {
+  appointmentId: String
+  authError: JSON
+  authRequirement: String
+  authResult: JSON
+  authStatus: String
+  caseNotSupported: JSON
+  caseReferenceNumber: String
+  clinicalsAvailable: Boolean
+  completed: String
+  coverageId: String
+  coverageStatus: PriorAuthMetricsCoverageStatus
+  date: String
+  device: String
+  initiated: String
+  location: String
+  occurrences: String
+  organizationId: String
+  patientId: String
+  priorAuthCoverageLinkId: JSON
+  retrievedByGravity: Boolean
+  submittedBy: String
+  submittedByGravity: Boolean
+  tenant: String
+  visit: String
+  organizationRead: OrganizationQueryReadResponse
+  deviceRead: DeviceQueryReadResponse
+  locationRead: LocationQueryReadResponse
+  userList: UserQueryListResponse
+}
+
+enum PriorAuthMetricsCoverageStatus {
+  Pending
+  Initiated
+  ActiveCoverage
+  NoCoverage
+  PayorNotActivated
+  Error
+  InTransition
+}
+
+enum DimensionDate {
+  initiated
+  appointmentStart
+}
+
+type PriorAuthQueryReadResponse {
+  id: String!
+  resource: PriorAuth!
+}
+
+type ScheduleQueryListResponse {
+  pages: Int!
+  resources: [ScheduleEvent]!
+}
+
+type ScheduleEvent {
+  allowedServiceTypes: [JSON]
+  created: String
+  description: String
+  end: String
+  id: String!
+  resourceType: String
+  start: String
+  status: String
+  tenant: String
+  updated: String
+}
+
+enum ResourceType {
+  device
+  practitioner
+}
+
+type ScheduleQueryReadResponse {
+  id: String!
+  resource: Schedule!
+}
+
+type Schedule {
+  allowedServiceTypes: [JSON]
+  byweekday: [ScheduleWeekdays]
+  created: String
+  description: String
+  dtstart: String!
+  durationMinutes: Float!
+  frequency: ScheduleFrequency!
+  id: String!
+  resourceId: String!
+  resourceType: ScheduleResourceType!
+  status: ScheduleStatus!
+  tenant: String
+  until: String!
+  updated: String
+  wkst: ScheduleWeekdays
+}
+
+enum ScheduleWeekdays {
+  MO
+  TU
+  WE
+  TH
+  FR
+  SA
+  SU
+}
+
+enum ScheduleFrequency {
+  yearly
+  monthly
+  weekly
+  daily
+  hourly
+  minutely
+  secondely
+}
+
+enum ScheduleResourceType {
+  device
+  practitioner
+}
+
+enum ScheduleStatus {
+  close
+  open
+  restrict
+}
+
+type ScheduleSlotQueryListResponse {
+  pages: Int!
+  resources: [ScheduleSlot]!
+}
+
+type ScheduleSlot {
+  durationMinutes: Int
+  resourceId: String
+  resourceType: ScheduleResourceType
+  start: String
+}
+
+type SyncQueryListResponse {
+  pages: Int!
+  resources: [Sync]!
+}
+
+type Sync {
+  acknowledgedAt: String
+  eventData: String
+  eventId: String
+  eventName: String
+  eventType: String
+  id: String!
+  state: String
+  subEventId: String
+  tenant: String
+  updated: String
+}
+
+enum Order21 {
+  asc
+  desc
+}
+
+enum OrderBy20 {
+  created
+  updated
+}
+
+type SyncQueryReadResponse {
+  resource: Sync!
+}
+
+type TenantConfigQueryListResponse {
+  resources: [TenantConfig]!
+}
+
+type TenantConfig {
+  config: String!
+  description: String
+  group: String!
+  id: String!
+  isActive: Boolean
+  parentId: String
+  updatedAt: Float
+  value: String!
+}
+
+type TenantConfigQueryReadResponse {
+  resource: TenantConfig!
+}
+
+type TenantQueryReadResponse {
+  resource: Tenant!
+}
+
+type Tenant {
+  currentStack: String
+  deployment: TenantDeployment!
+  id: String!
+  integrationInbound: TenantIntegrationInbound
+  integrationOutbound: TenantIntegrationOutbound
+  logoUrl: String
+  migrationStatus: String
+  name: String!
+  services: [TenantServices]!
+  shortName: String!
+  status: TenantStatus
+  telecom: [TenantTelecom]
+  timezone: String
+  updatedAt: Float
+}
+
+enum TenantDeployment {
+  pool
+  silo
+}
+
+enum TenantIntegrationInbound {
+  athena
+  modmed
+  hl7
+}
+
+enum TenantIntegrationOutbound {
+  athena
+  modmed
+  hl7
+}
+
+enum TenantServices {
+  GravityAuth
+  GravityFlow
+  GravityBooking
+}
+
+enum TenantStatus {
+  active
+  creationPending
+  creationFailed
+  inactive
+}
+
+type TenantTelecom {
+  rank: Float
+  system: String
+  use: String
+  value: String
+}
+
+type TextOutreachFetchEligibilityResponse {
+  pages: Int!
+  resources: [TextOutreachEligibility]!
+}
+
+type TextOutreachEligibility {
+  id: String!
+  visit: String!
+}
+
+enum ResourceType2 {
+  device
+  practitioner
+}
+
+type TextOutreachQueryListResponse {
+  pages: Int!
+  resources: [TextOutreach]!
+}
+
+type TextOutreach {
+  created: String
+  deliveredTime: String
+  from: String
+  id: String!
+  patient: String
+  refId: String
+  resourceId: String
+  resourceType: TextOutreachNudgeResourceType
+  sentTime: String
+  status: TextOutreachStatus
+  tenant: String
+  text: String
+  to: String
+  type: TextOutreachType
+  updated: String
+  visit: String
+}
+
+enum TextOutreachNudgeResourceType {
+  device
+  practitioner
+}
+
+enum TextOutreachStatus {
+  Initiated
+  Sent
+  Delivered
+  Undelivered
+  Failed
+}
+
+enum TextOutreachType {
+  Nudge
+  RescheduleSuccess
+  RescheduleFailed
+}
+
+enum Order22 {
+  asc
+  desc
+}
+
+enum OrderBy21 {
+  created
+  updated
+}
+
+enum Status3 {
+  Initiated
+  Sent
+  Delivered
+  Undelivered
+  Failed
+}
+
+enum Type {
+  Nudge
+  RescheduleSuccess
+  RescheduleFailed
+}
+
+type TextOutreachQueryMetricResponse {
+  resource: TextOutreachMetrics
+  resources: [TextOutreachMetrics]
+}
+
+type TextOutreachMetrics {
+  date: String
+  occurrences: Float
+  status: String
+  tenant: String
+  type: TextOutreachType
+}
+
+type TextOutreachQueryReadResponse {
+  id: String!
+  resource: TextOutreach!
+}
+
+type UrlNudgeQueryListResponse {
+  pages: Int!
+  resources: [UrlNudge]!
+}
+
+type UrlNudge {
+  appointment: String!
+  created: String
+  id: String
+  tenant: String!
+  updated: String
+  urlOpenedAt: String
+}
+
+enum Order23 {
+  asc
+  desc
+}
+
+enum OrderBy22 {
+  Created
+  Updated
+}
+
+type UrlNudgeQueryMetricResponse {
+  resource: UrlNudgeMetrics
+  resources: [UrlNudgeMetrics]
+}
+
+type UrlNudgeMetrics {
+  date: String
+  occurrences: Float
+  tenant: String
+}
+
+type UrlNudgeQueryReadResponse {
+  id: String!
+  resource: UrlNudge!
+}
+
+type UserQueryListResponse {
+  pages: Int!
+  resources: [User]!
+}
+
+type User {
+  created: String!
+  email: String
+  emailVerified: Boolean
+  id: String!
+  modified: String!
+  role: UserRole!
+  sub: String!
+  tenant: String!
+  tenants: [String]
+  username: String!
+}
+
+enum UserRole {
+  user
+  admin
+}
+
+enum Role {
+  user
+  admin
+}
+
+type UserQueryReadResponse {
+  resource: User!
+}
+
+type AppointmentCommandResponse {
+  resourceID: String!
+}
+
+input AppointmentWriteInput {
+  basedOn: String
+  bookedStamp: String
+  cancelationReason: String
+  comment: String
+  created: String
+  description: String
+  device: String
+  endTime: String
+  generated: String
+  id: String
+  location: String
+  metadata: AppointmentMetadataInput
+  minutesDuration: Float
+  patient: String
+  patientInstruction: String
+  pendingBooking: AppointmentRescheduleInput
+  reasonCode: AppointmentReasonCodeInput
+  serviceCategory: AppointmentServiceCategoryInput
+  serviceType: AppointmentServiceTypeInput!
+  slot: String
+  specialty: String
+  startTime: String
+  status: AppointmentStatus
+  statusStamp: String
+  tag: String
+  tenant: String
+  updated: String
+  visit: String!
+}
+
+input AppointmentMetadataInput {
+  authEndDate: String
+  authStartDate: String
+  authStatus: String
+  id: String
+  lastCompletedOn: String
+}
+
+input AppointmentRescheduleInput {
+  appointment: String!
+  created: String
+  endTime: String!
+  id: String!
+  startTime: String!
+  status: AppointmentRescheduleStatus!
+  tenant: String!
+}
+
+input AppointmentReasonCodeInput {
+  coding: String
+  text: String
+}
+
+input AppointmentServiceCategoryInput {
+  coding: String
+  text: String
+}
+
+input AppointmentServiceTypeInput {
+  coding: String!
+  text: String
+}
+
+input AppointmentPatchInput {
+  basedOn: String
+  bookedStamp: String
+  cancelationReason: String
+  comment: String
+  created: String
+  description: String
+  device: String
+  endTime: String
+  generated: String
+  id: String
+  location: String
+  metadata: AppointmentMetadataInput
+  minutesDuration: Float
+  patient: String
+  patientInstruction: String
+  pendingBooking: AppointmentRescheduleInput
+  reasonCode: AppointmentReasonCodeInput
+  serviceCategory: AppointmentServiceCategoryInput
+  serviceType: AppointmentServiceTypeInput
+  slot: String
+  specialty: String
+  startTime: String
+  status: AppointmentStatus
+  statusStamp: String
+  tag: String
+  tenant: String
+  updated: String
+  visit: String
+}
+
+input AppointmentRescheduleRequestInput {
+  endTime: String!
+  startTime: String!
+}
+
+type ModmedAuthResponse {
+  scope: String!
+}
+
+input ModmedAuthRequestInput {
+  apiKey: String!
+  password: String!
+  prefix: String!
+  stage: ModmedAuthRequestStage!
+  tenant: String!
+  username: String!
+}
+
+enum ModmedAuthRequestStage {
+  sandbox
+  practice
+  production
+}
+
+type CodeSystemCommandResponse {
+  resourceID: String!
+}
+
+input CodeSystemInput {
+  coding: [CodeSystemCodingInput]
+  created: String
+  id: String
+  system: String!
+  systemType: String
+  tenant: String
+  updated: String
+}
+
+input CodeSystemCodingInput {
+  code: String
+  created: String
+  display: String
+  id: String
+  metadata: JSON
+  parentId: String
+  type: String
+  updated: String
+}
+
+type CoverageCommandResponse {
+  resourceID: String!
+}
+
+input CoveragePutInput {
+  beneficiary: String
+  benefits: CoverageSchemaBenefitsInput
+  coverageCheckedAt: String
+  groupNumber: String
+  id: String
+  payor: String
+  status: CoverageStatus
+  subscriberId: String
+  tag: String
+  tenant: String
+  updated: String
+  visit: String
+}
+
+input CoverageSchemaBenefitsInput {
+  coInsurance: Float
+  coPayment: Float
+  estimatedDeductibles: Float
+  estimatedOutOfPocket: Float
+  totalDeductibles: Float
+  totalOutOfPocket: Float
+}
+
+type CoverageEbvResult {
+  auth: CoverageEbvResultAuth!
+}
+
+enum CoverageEbvResultAuth {
+  prior_auth_required
+  no_prior_auth_required
+}
+
+input CoverageEbvInputInput {
+  appointmentId: String
+  authError: CoverageEbvInputAuthError
+  authNumber: String
+  authResult: CoverageEbvInputAuthResult
+  authStatus: CoverageEbvInputAuthStatus
+  coverage: [CoverageEbvInputCoverageItemInput]!
+  endDate: String
+  id: String
+  patientId: String!
+  practitioner: CoverageEbvInputPractitionerInput
+  serviceType: CoverageEbvInputServiceTypeInput
+  startDate: String
+  tag: String
+  updateStatus: CoverageEbvInputUpdateStatus
+  visit: String!
+}
+
+enum CoverageEbvInputAuthError {
+  UnknownError
+  NetworkError
+  LoginError
+  MissingInformationError
+  CasePending
+  ClinicalsRequired
+}
+
+enum CoverageEbvInputAuthResult {
+  CaseAuthorized
+  CaseNotStarted
+  CaseNotSupported
+  CaseDenied
+  CaseP2P
+}
+
+enum CoverageEbvInputAuthStatus {
+  pending
+  running
+  complete
+  failed
+}
+
+input CoverageEbvInputCoverageItemInput {
+  id: String!
+}
+
+input CoverageEbvInputPractitionerInput {
+  id: String
+}
+
+input CoverageEbvInputServiceTypeInput {
+  coding: String!
+  text: String
+}
+
+enum CoverageEbvInputUpdateStatus {
+  none
+  complete
+  failed
+}
+
+input CoverageInitiateInput {
+  forceInitiate: Boolean
+  isAvailityRest: Boolean
+  isBenefitsCheck: Boolean
+  placeOfService: String
+  serviceType: String
+}
+
+input CoveragePatchInput {
+  beneficiary: String
+  benefits: CoverageSchemaBenefitsInput
+  coverageCheckedAt: String
+  groupNumber: String
+  id: String
+  payor: String
+  status: CoverageStatus
+  subscriberId: String
+  tag: String
+  tenant: String
+  updated: String
+  visit: String
+}
+
+type DeviceCommandResponse {
+  resourceID: String!
+}
+
+input DeviceWriteInput {
+  id: String
+  location: String
+  manufacturer: String!
+  metadata: DeviceMetadataInput
+  name: DeviceNameInput!
+  note: String
+  owner: String!
+  status: DeviceStatus
+  statusReason: String
+  tag: String
+  tenant: String
+  type: String!
+  updatedAt: Float
+}
+
+input DeviceMetadataInput {
+  defaultDurationMinutes: Float
+  id: String
+  modality: String
+  nudgeable: Boolean
+}
+
+input DeviceNameInput {
+  name: String!
+  type: String!
+}
+
+input DevicePatchInput {
+  id: String
+  location: String
+  manufacturer: String
+  metadata: DeviceMetadataInput
+  name: DeviceNameInput
+  note: String
+  owner: String
+  status: DeviceStatus
+  statusReason: String
+  tag: String
+  tenant: String
+  type: String
+  updatedAt: Float
+}
+
+input DeviceServiceDurationCreateInput {
+  created: String
+  durationMinutes: Int!
+  id: String
+  isAvailable: Boolean
+  nudgeEligible: Boolean
+  parentId: String
+  serviceCategory: String
+  serviceTypeCode: String!
+  updated: String
+}
+
+input DeviceServiceDurationPatchInput {
+  created: String
+  durationMinutes: Int
+  id: String
+  isAvailable: Boolean
+  nudgeEligible: Boolean
+  parentId: String!
+  serviceCategory: String
+  serviceTypeCode: String!
+  updated: String
+}
+
+type DocumentCommandResponse {
+  resourceID: String!
+}
+
+input DocumentCreateInput {
+  actionRequired: Boolean
+  appointment: String
+  created: String
+  documentType: String
+  extractFile: String
+  extractStatus: String
+  extractText: String
+  file: String!
+  fileName: String!
+  fileType: String
+  id: String
+  outboundFaxes: [DocumentOutboundFaxesInput]
+  patient: String
+  patientBirthDate: String
+  patientFirstName: String
+  patientLastName: String
+  patientPhoneNumber: String
+  source: String
+  tag: String
+  tenant: String
+  updated: String
+  visit: String
+}
+
+input DocumentOutboundFaxesInput {
+  comments: String
+  created: String
+  documentId: String
+  faxNumber: String
+  faxReferenceId: String
+  id: String
+  status: DocumentOutboundFaxesStatus
+  updated: String
+}
+
+type DocumentFaxResponse {
+  resourceID: String
+}
+
+input DocumentFaxInput {
+  comments: String
+  created: String
+  document: DocumentInput
+  documentId: String!
+  faxNumber: String!
+  faxReferenceId: String
+  id: String!
+  mockScenarioId: String
+  status: DocumentFaxStatus
+  updated: String
+}
+
+input DocumentInput {
+  actionRequired: Boolean
+  appointment: String
+  created: String
+  documentType: String
+  extractFile: String
+  extractStatus: String
+  extractText: String
+  file: String!
+  fileName: String!
+  fileType: String
+  id: String!
+  outboundFaxes: [DocumentOutboundFaxesInput]
+  patient: String
+  patientBirthDate: String
+  patientFirstName: String
+  patientLastName: String
+  patientPhoneNumber: String
+  source: String
+  tag: String
+  tenant: String
+  updated: String
+  visit: String
+}
+
+enum DocumentFaxStatus {
+  initiated
+  transmitting
+  success
+  failed
+}
+
+input DocumentPatchInput {
+  actionRequired: Boolean
+  appointment: String
+  created: String
+  documentType: String
+  extractFile: String
+  extractStatus: String
+  extractText: String
+  file: String
+  fileName: String
+  fileType: String
+  id: String
+  outboundFaxes: [DocumentOutboundFaxesInput]
+  patient: String
+  patientBirthDate: String
+  patientFirstName: String
+  patientLastName: String
+  patientPhoneNumber: String
+  source: String
+  tag: String
+  tenant: String
+  updated: String
+  visit: String
+}
+
+type EstimateCommandResponse {
+  resourceID: String!
+}
+
+input EstimateInput {
+  coverage: [EstimateCoverageInput]
+  created: String
+  patientResponsibility: Int
+  status: String
+  totalAllowedAmount: Int
+  updated: String
+  visit: String!
+}
+
+input EstimateCoverageInput {
+  benefits: EstimateBenefitsInput
+  coverageId: String!
+  fees: [EstimateFeesInput]
+  id: String
+  visit: String
+}
+
+input EstimateBenefitsInput {
+  coinsurance: Float
+  copayment: Int
+  coverageOrder: EstimateCoverageOrder
+  deductibleRemaining: Int
+  network: String
+  outOfPocketRemaining: Int
+}
+
+input EstimateFeesInput {
+  allowedAmount: Int
+  appointmentId: String!
+  id: String
+  location: String
+  serviceType: EstimateFeesServiceTypeInput
+}
+
+input EstimateFeesServiceTypeInput {
+  coding: String!
+  description: String
+}
+
+type FaxOutreachCommandResponse {
+  resourceID: String!
+}
+
+input FaxOutreachRequestInput {
+  intent: FaxOutreachIntent!
+  practitioner: String
+  visit: String!
+}
+
+input FaxOutreachRuleRequestInput {
+  intent: FaxOutreachRuleIntent!
+  practitioner: String!
+}
+
+enum FaxOutreachRuleIntent {
+  RequestForOrder
+  RequestToInitiate
+  RequestForClinicals
+}
+
+type FeeScheduleCommandResponse {
+  resourceID: String!
+}
+
+input FeeScheduleWriteInput {
+  created: String
+  fees: [FeeScheduleFeesInput]
+  id: String
+  name: String!
+  tenant: String
+  updated: String
+}
+
+input FeeScheduleFeesInput {
+  amount: Float!
+  created: String
+  effectiveDate: String
+  feeScheduleId: String
+  id: String!
+  serviceTypeCode: String!
+  tenant: String
+  updated: String
+}
+
+input FeeScheduleFeesWriteInput {
+  amount: Float!
+  created: String
+  effectiveDate: String
+  feeScheduleId: String
+  id: String
+  serviceTypeCode: String!
+  tenant: String
+  updated: String
+}
+
+type AthenaTokenResponse {
+  accessToken: String!
+  expiresIn: Float
+  stage: AthenaTokenResponseStage!
+}
+
+enum AthenaTokenResponseStage {
+  preview
+  production
+}
+
+input AthenaTokenRequestInput {
+  tenant: String!
+}
+
+type EpicTokenResponse {
+  accessToken: String!
+  expiresIn: Float!
+  scope: String!
+}
+
+type ModmedTokenResponse {
+  accessToken: String!
+  apiKey: String!
+  expiresIn: Float
+  prefix: String!
+  scope: String!
+  stage: ModmedTokenResponseStage!
+}
+
+enum ModmedTokenResponseStage {
+  sandbox
+  practice
+  production
+}
+
+input ModmedTokenRequestInput {
+  tenant: String!
+}
+
+type FlowCommandResponse {
+  resourceID: String!
+}
+
+input FlowWriteInput {
+  appointmentId: String
+  appointmentStart: String
+  appointmentStatus: AppointmentStatus
+  created: String
+  deviceId: String
+  doNotContact: Boolean
+  id: String
+  modified: String
+  patientId: String
+  priorAuthEnd: String
+  priorAuthStart: String
+  priorAuthStatus: String
+  serviceCategory: AppointmentServiceCategoryInput
+  serviceType: AppointmentServiceTypeInput
+  tenant: String
+  visitId: String
+}
+
+type LocationCommandResponse {
+  resourceID: String!
+}
+
+input LocationWriteInput {
+  address: String
+  alias: String
+  description: String
+  id: String
+  managingOrganization: String
+  name: String!
+  npi: String
+  partOf: String
+  status: String
+  tag: String
+  taxId: String
+  telecom: [LocationTelecomInput]
+  tenant: String
+  type: String
+  updatedAt: Float
+}
+
+input LocationTelecomInput {
+  rank: Float
+  system: String
+  use: String
+  value: String
+}
+
+input LocationPatchInput {
+  address: String
+  alias: String
+  description: String
+  id: String
+  managingOrganization: String
+  name: String
+  npi: String
+  partOf: String
+  status: String
+  tag: String
+  taxId: String
+  telecom: [LocationTelecomInput]
+  tenant: String
+  type: String
+  updatedAt: Float
+}
+
+type LookupAuthRequirementCommandResponse {
+  resourceID: String!
+}
+
+input LookupWriteInput {
+  created: String
+  description: String
+  ediId: String
+  exclusions: [LookupAuthRequirementExclusionsInput]
+  groupNumber: String
+  id: String
+  isAuthRequired: Boolean!
+  organizationName: String
+  ruleType: LookupRuleType
+  serviceType: LookupAuthRequirementServiceTypeInput!
+  subscriberPrefix: String
+  susanOutput: String
+  updated: String
+}
+
+input LookupAuthRequirementExclusionsInput {
+  excludeEdiId: String
+  excludeGroupNumber: String
+  excludeOrganizationName: String
+  excludeServiceTypeCoding: String
+  excludeSubscriberPrefix: String
+  id: String
+  parentId: String
+}
+
+input LookupAuthRequirementServiceTypeInput {
+  coding: String!
+  text: String
+}
+
+type OrderCommandResponse {
+  resourceID: String!
+}
+
+input OrderWriteInput {
+  appointment: OrderInputAppointmentInput
+  callbackUrl: String
+  coverage: [OrderInputCoverageInput]
+  documentId: String
+  id: String
+  location: OrderInputLocationInput
+  patient: OrderInputPatientInput
+  practitioner: OrderInputPractitionerInput
+  review: String
+  runCoverage: Boolean
+  runPriorAuthCheck: Boolean
+  runPriorAuthConfirmation: Boolean
+  runPriorAuthSubmission: Boolean
+  status: String
+  tenant: String
+}
+
+input OrderInputAppointmentInput {
+  endTime: String
+  id: String!
+  patient: String!
+  reasonCode: AppointmentReasonCodeInput
+  serviceType: AppointmentServiceTypeInput!
+  startTime: String
+  status: OrderInputAppointmentStatus
+  visit: String!
+}
+
+enum OrderInputAppointmentStatus {
+  bookingPending
+  booked
+  canceled
+  arrived
+  checked_in
+  completed
+  pending
+}
+
+input OrderInputCoverageInput {
+  beneficiary: String
+  groupNumber: String
+  id: String!
+  payorId: String
+  payorName: String
+  subscriberId: String
+}
+
+input OrderInputLocationInput {
+  id: String
+  name: String
+}
+
+input OrderInputPatientInput {
+  address: String
+  birthDate: String
+  firstName: String
+  gender: String
+  id: String!
+  language: String
+  lastName: String
+  middleName: String
+  tag: String
+  telecom: [PatientTelecomInput]
+}
+
+input PatientTelecomInput {
+  rank: Float
+  system: String
+  use: String
+  value: String
+}
+
+input OrderInputPractitionerInput {
+  firstName: String
+  id: String
+  lastName: String
+  npi: String
+}
+
+type OrderIngestResponse {
+  id: String!
+  resources: [OrderIngestResponseResource]!
+}
+
+type OrderIngestResponseResource {
+  appointmentId: String
+  review: String
+  rowNumber: Int
+  status: OrderIngestResponseRowStatus
+}
+
+enum OrderIngestResponseRowStatus {
+  succeeded
+  failed
+  warning
+}
+
+input OrderIngestInput {
+  file: String!
+  fileName: String
+  fileType: String
+  id: String!
+  tenant: String
+}
+
+type OrganizationCommandResponse {
+  resourceID: String!
+}
+
+input OrganizationContractWriteInput {
+  created: String
+  feeSchedule: String
+  id: String
+  location: String
+  multiplier: Float
+  organization: String
+  tenant: String
+  updated: String
+}
+
+input OrganizationContractPatchInput {
+  created: String
+  feeSchedule: String
+  id: String
+  location: String
+  multiplier: Float
+  organization: String
+  tenant: String
+  updated: String
+}
+
+input OrganizationWriteInput {
+  active: Boolean
+  address: String
+  alias: String
+  contact: OrganizationContactInput
+  contract: [OrganizationContractInput]
+  id: String
+  identifiers: [OrganizationIdentifierInput]
+  inNetwork: Boolean
+  isGravityAuthSupported: Boolean
+  name: String!
+  partOf: String
+  tag: String
+  telecom: String
+  tenant: String
+  type: String!
+  updatedAt: Float
+}
+
+input OrganizationContactInput {
+  name: String
+  telecom: String
+}
+
+input OrganizationContractInput {
+  created: String
+  feeSchedule: String!
+  id: String
+  location: String!
+  multiplier: Float!
+  organization: String
+  tenant: String
+  updated: String
+}
+
+input OrganizationIdentifierInput {
+  assigner: String
+  period: OrganizationIdentifierPeriodInput
+  system: String!
+  type: String
+  use: String
+  value: String!
+}
+
+input OrganizationIdentifierPeriodInput {
+  end: String
+  start: String
+}
+
+input OrganizationFeeScheduleWriteInput {
+  amount: String
+  created: String
+  id: String
+  location: String
+  locationName: String
+  organization: String
+  serviceType: String
+  updated: String
+}
+
+input OrganizationFeeSchedulePatchInput {
+  amount: String
+  created: String
+  id: String
+  location: String
+  locationName: String
+  organization: String
+  serviceType: String
+  updated: String
+}
+
+input OrganizationPatchInput {
+  active: Boolean
+  address: String
+  alias: String
+  contact: OrganizationContactInput
+  contract: [OrganizationContractInput]
+  id: String
+  identifiers: [OrganizationIdentifierInput]
+  inNetwork: Boolean
+  isGravityAuthSupported: Boolean
+  name: String
+  partOf: String
+  tag: String
+  telecom: String
+  tenant: String
+  type: String
+  updatedAt: Float
+}
+
+type PatientCommandResponse {
+  resourceID: String!
+}
+
+input PatientWriteInput {
+  address: String
+  birthDate: String
+  doNotContact: Boolean
+  firstName: String
+  gender: String
+  generatedAt: String
+  id: String
+  language: String
+  lastName: String
+  link: [String]
+  middleName: String
+  tag: String
+  telecom: [PatientTelecomInput]
+  tenant: String
+  updated: String
+}
+
+input PatientPatchInput {
+  address: String
+  birthDate: String
+  doNotContact: Boolean
+  firstName: String
+  gender: String
+  generatedAt: String
+  id: String
+  language: String
+  lastName: String
+  link: [String]
+  middleName: String
+  tag: String
+  telecom: [PatientTelecomInput]
+  tenant: String
+  updated: String
+}
+
+type PractitionerCommandResponse {
+  resourceID: String!
+}
+
+input PractitionerWriteInput {
+  address: String
+  doNotContact: Boolean
+  firstName: String!
+  id: String
+  isPriorAuthSubmissionEnabled: Boolean
+  lastName: String!
+  metadata: PractitionerMetadataInput
+  npi: String
+  speciality: String
+  tag: String
+  telecom: [PractitionerTelecomInput]
+  updatedAt: Float
+}
+
+input PractitionerMetadataInput {
+  id: String
+  nudgeable: Boolean
+}
+
+input PractitionerTelecomInput {
+  rank: Float
+  system: String
+  use: String
+  value: String
+}
+
+input PractitionerPatchInput {
+  address: String
+  doNotContact: Boolean
+  firstName: String
+  id: String
+  isPriorAuthSubmissionEnabled: Boolean
+  lastName: String
+  metadata: PractitionerMetadataInput
+  npi: String
+  speciality: String
+  tag: String
+  telecom: [PractitionerTelecomInput]
+  updatedAt: Float
+}
+
+type PriorAuthCommandResponse {
+  resourceID: String!
+}
+
+input PriorAuthAuthstatusInitiateInput {
+  botName: [PriorAuthAuthstatusInitiateBotName]
+}
+
+enum PriorAuthAuthstatusInitiateBotName {
+  AIM
+  NIA
+  Carecore
+  Medsolutions
+  Availity
+}
+
+input PriorAuthCoveragePatchInput {
+  authError: PriorAuthCoverageAuthError
+  authErrorCause: String
+  authNumber: String
+  authRequirement: PriorAuthCoverageActionRequirement
+  authResult: PriorAuthCoverageAuthResult
+  authRuleDescription: String
+  botName: String
+  caseReferenceNumber: String
+  clinicalsAvailable: Boolean
+  coverageStatus: PriorAuthCoverageStatus
+  created: String
+  endDate: String
+  initiated: String
+  message: String
+  retrievedByGravity: Boolean
+  startDate: String
+  submitted: String
+  submittedBy: String
+  submittedByGravity: Boolean
+  updated: String
+}
+
+input PriorAuthWriteInput {
+  appointmentId: String
+  appointmentStart: String
+  appointmentStatus: PriorAuthAppointmentStatus
+  authStatus: PriorAuthAuthStatus
+  coverage: [PriorAuthCoverageInput]
+  device: String
+  forceInitiate: Boolean
+  generated: String
+  id: String
+  isPriorAuthSubmissionEnabled: Boolean
+  location: String
+  metadata: PriorAuthMetadataInput
+  mockScenarioId: String
+  patientId: String
+  practitioner: PriorAuthPractitionerInput
+  serviceCategory: PriorAuthServiceCategoryInput
+  serviceType: PriorAuthServiceTypeInput
+  tag: String
+  tenant: String
+  updated: String
+  visit: String
+}
+
+input PriorAuthCoverageInput {
+  actionRequired: Boolean
+  actionRequiredType: PriorAuthCoverageActionRequiredType
+  authError: PriorAuthCoverageAuthError
+  authErrorCause: String
+  authNumber: String
+  authRequirement: PriorAuthCoverageActionRequirement
+  authResult: PriorAuthCoverageAuthResult
+  authRuleDescription: String
+  botName: String
+  caseReferenceNumber: String
+  clinicalsAvailable: Boolean
+  completed: String
+  coverageId: String!
+  coverageStatus: PriorAuthCoverageStatus
+  created: String
+  endDate: String
+  execution: String
+  id: String!
+  initiated: String
+  message: String
+  order: String
+  organizationId: String
+  priorAuthCoverageLinkId: String
+  retrievedByGravity: Boolean
+  startDate: String
+  submitted: String
+  submittedBy: String
+  submittedByGravity: Boolean
+  tenant: String
+  updated: String
+}
+
+input PriorAuthMetadataInput {
+  gravityAuthEnabled: Boolean
+  id: String
+  toReview: Boolean
+}
+
+input PriorAuthPractitionerInput {
+  id: String
+}
+
+input PriorAuthServiceCategoryInput {
+  coding: String
+  text: String
+}
+
+input PriorAuthServiceTypeInput {
+  coding: String!
+  text: String
+}
+
+input PriorAuthInitiateInput {
+  forceInitiate: Boolean
+  isPriorAuthSubmissionEnabled: Boolean
+}
+
+input PriorAuthPatchInput {
+  appointmentId: String
+  appointmentStart: String
+  appointmentStatus: PriorAuthAppointmentStatus
+  authStatus: PriorAuthAuthStatus
+  coverage: [PriorAuthCoverageInput]
+  device: String
+  forceInitiate: Boolean
+  generated: String
+  id: String
+  isPriorAuthSubmissionEnabled: Boolean
+  location: String
+  metadata: PriorAuthMetadataInput
+  mockScenarioId: String
+  patientId: String
+  practitioner: PriorAuthPractitionerInput
+  serviceCategory: PriorAuthServiceCategoryInput
+  serviceType: PriorAuthServiceTypeInput
+  tag: String
+  tenant: String
+  updated: String
+  visit: String
+}
+
+type ScheduleCommandResponse {
+  resourceID: String!
+}
+
+input ScheduleWriteInput {
+  allowedServiceTypes: [JSON]
+  byweekday: [ScheduleWeekdays]
+  created: String
+  description: String
+  dtstart: String!
+  durationMinutes: Float!
+  frequency: ScheduleFrequency!
+  id: String
+  resourceId: String!
+  resourceType: ScheduleResourceType!
+  status: ScheduleStatus!
+  tenant: String
+  until: String!
+  updated: String
+  wkst: ScheduleWeekdays
+}
+
+input ScheduleSlotsInput {
+  created: String
+  id: String!
+  resourceId: String!
+  resourceType: ScheduleSlotsResourceType!
+  slotDate: String!
+  slots: [ScheduleSlotsListInput]
+  tenant: String
+  updated: String
+}
+
+enum ScheduleSlotsResourceType {
+  device
+  practitioner
+}
+
+input ScheduleSlotsListInput {
+  allowedServiceTypes: [JSON]
+  created: String
+  durationMinutes: Int!
+  id: String
+  slotsId: String
+  startTime: String!
+  status: ScheduleSlotsStatus!
+  updated: String
+}
+
+enum ScheduleSlotsStatus {
+  close
+  open
+  restrict
+}
+
+type SyncCommandResponse {
+  resourceID: String!
+}
+
+input SyncWriteInput {
+  acknowledgedAt: String
+  eventData: String
+  eventId: String
+  eventName: String
+  eventType: String
+  id: String
+  state: String
+  subEventId: String
+  tenant: String
+  updated: String
+}
+
+input SyncPatchInput {
+  acknowledgedAt: String
+  eventData: String
+  eventId: String
+  eventName: String
+  eventType: String
+  id: String
+  state: String
+  subEventId: String
+  tenant: String
+  updated: String
+}
+
+type TextOutreachCommandResponse {
+  resourceID: String!
+}
+
+input TextOutreachCommandInput {
+  type: TextOutreachQueryType!
+  visit: String!
+}
+
+enum TextOutreachQueryType {
+  Nudge
+  RescheduleSuccess
+  RescheduleFailed
+}
+
+type UrlNudgeCommandResponse {
+  resourceID: String!
+}
+
+input UrlNudgeInput {
+  appointment: String!
+  created: String
+  id: String
+  tenant: String!
+  updated: String
+  urlOpenedAt: String
+}
+
+type UserCommandResponse {
+  resourceID: String!
+}
+
+input UserCreateInput {
+  email: String!
+  role: UserRole!
+  username: String!
+}
+
+type UserCreateCredentialsResponse {
+  accessKeyId: String!
+  expiration: String!
+  secretKey: String!
+  sessionToken: String!
+}
+
+input UserCreateCredentialsInput {
+  idToken: String!
+}
+
+input UserUpdateInput {
+  email: String
+  role: UserRole!
+  tenants: [String]
+}
+
+enum Permission {
+  read
+  analyze
+  write
+  delete
+  command
+  manage
+  operate
+}
+
+type Subscription {
+  priorAuthAdded(tenant: String!): PriorAuthQueryReadResponse
+  priorAuthChanged(tenant: String!): PriorAuthQueryReadResponse
+  patientChanged(tenant: String!): PatientQueryReadResponse
+  coverageChanged(tenant: String!): CoverageQueryReadResponse
+  locationChanged(tenant: String!): LocationQueryReadResponse
+  deviceChanged(tenant: String!): DeviceQueryReadResponse
+  organizationChanged(tenant: String!): OrganizationQueryReadResponse
+  practitionerChanged(tenant: String!): PractitionerQueryReadResponse
+  appointmentChanged(tenant: String!): AppointmentQueryReadResponse
+  documentAdded(tenant: String!): DocumentQueryReadResponse
+  documentChanged(tenant: String!): DocumentQueryReadResponse
+}

@@ -8,7 +8,6 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:react-hooks/recommended",
-    "plugin:@tanstack/eslint-plugin-query/recommended",
     "prettier",
   ],
   parser: "@typescript-eslint/parser",
@@ -18,7 +17,7 @@ module.exports = {
     project: true,
     tsconfigRootDir: __dirname,
   },
-  plugins: ["react-refresh", "@tanstack/query"],
+  plugins: ["react-refresh"],
   rules: {
     "react-refresh/only-export-components": [
       "warn",
