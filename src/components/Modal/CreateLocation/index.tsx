@@ -2,11 +2,12 @@ import { tenantInput } from "@/store/authAtom";
 import {
   LocationWriteInput,
   useLocationCreateMutation,
+  useLocationUpdateMutation,
 } from "@/types/generated";
 import { App, Button, Col, Form, Input, Modal, Row } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useAtom } from "jotai";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import ReactJson from "react-json-view";
 
 interface IProps {
@@ -17,22 +18,43 @@ interface IProps {
 const { TextArea } = Input;
 
 function CreateLocation({ open, handleClose, initialValue }: IProps) {
-  const [locationCreateMutation, { loading }] = useLocationCreateMutation({
-    onCompleted: () => {
-      form.resetFields();
-      handleClose();
-    },
-    onError(error) {
-      notification.error({
-        message: "Cannot create a new location",
-      });
-      modal.error({
-        title: "Encountered an Error",
-        content: <ReactJson src={error} theme="monokai" />,
-        width: "60vh",
-      });
-    },
-  });
+  const [locationCreateMutation, { loading: createLoading }] =
+    useLocationCreateMutation({
+      onCompleted: () => {
+        notification.success({ message: "Successfully Created Location" });
+        form.resetFields();
+        handleClose();
+      },
+      onError(error) {
+        notification.error({
+          message: "Cannot create a new location",
+        });
+        modal.error({
+          title: "Encountered an Error",
+          content: <ReactJson src={error} theme="monokai" />,
+          width: "60vh",
+        });
+      },
+    });
+
+  const [locationUpdateMutation, { loading: updateLoading }] =
+    useLocationUpdateMutation({
+      onCompleted: () => {
+        notification.success({ message: "Successfully Updated Location" });
+        form.resetFields();
+        handleClose();
+      },
+      onError(error) {
+        notification.error({
+          message: "Cannot update to a new location",
+        });
+        modal.error({
+          title: "Encountered an Error",
+          content: <ReactJson src={error} theme="monokai" />,
+          width: "60vh",
+        });
+      },
+    });
 
   const [form] = useForm<LocationWriteInput>();
   const { message, notification, modal } = App.useApp();
@@ -47,19 +69,38 @@ function CreateLocation({ open, handleClose, initialValue }: IProps) {
   async function formSubmit() {
     try {
       await form.validateFields();
-      locationCreateMutation({
-        variables: {
-          requestBody: {
-            ...form.getFieldsValue(),
+      if (initialValue) {
+        locationUpdateMutation({
+          variables: {
+            requestBody: {
+              ...form.getFieldsValue(),
+            },
+            //@ts-expect-error
+            locationUpdateId: initialValue.id,
+            //@ts-expect-error
+            tenant: tenant,
           },
-          //@ts-expect-error
-          tenantInput: tenant,
-        },
-      });
+        });
+      } else {
+        locationCreateMutation({
+          variables: {
+            requestBody: {
+              ...form.getFieldsValue(),
+            },
+            //@ts-expect-error
+            tenantInput: tenant,
+          },
+        });
+      }
     } catch (e) {
       message.error("Something went wrong while validating ");
     }
   }
+
+  const loading = useMemo(
+    () => createLoading || updateLoading,
+    [createLoading, updateLoading],
+  );
 
   return (
     <Form

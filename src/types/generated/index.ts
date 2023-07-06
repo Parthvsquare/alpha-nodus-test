@@ -5711,6 +5711,15 @@ export type LocationCreateMutationVariables = Exact<{
 
 export type LocationCreateMutation = { locationCreate?: { resourceID: string } | null };
 
+export type LocationUpdateMutationVariables = Exact<{
+  locationUpdateId: Scalars['String'];
+  requestBody: LocationWriteInput;
+  tenant: Scalars['String'];
+}>;
+
+
+export type LocationUpdateMutation = { locationUpdate?: { resourceID: string } | null };
+
 export type LocationListQueryVariables = Exact<{
   tenantInput: Scalars['String'];
 }>;
@@ -5753,6 +5762,45 @@ export function useLocationCreateMutation(baseOptions?: Apollo.MutationHookOptio
 export type LocationCreateMutationHookResult = ReturnType<typeof useLocationCreateMutation>;
 export type LocationCreateMutationResult = Apollo.MutationResult<LocationCreateMutation>;
 export type LocationCreateMutationOptions = Apollo.BaseMutationOptions<LocationCreateMutation, LocationCreateMutationVariables>;
+export const LocationUpdateDocument = gql`
+    mutation LocationUpdate($locationUpdateId: String!, $requestBody: LocationWriteInput!, $tenant: String!) {
+  locationUpdate(
+    id: $locationUpdateId
+    requestBody: $requestBody
+    tenant: $tenant
+  ) {
+    resourceID
+  }
+}
+    `;
+export type LocationUpdateMutationFn = Apollo.MutationFunction<LocationUpdateMutation, LocationUpdateMutationVariables>;
+
+/**
+ * __useLocationUpdateMutation__
+ *
+ * To run a mutation, you first call `useLocationUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLocationUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [locationUpdateMutation, { data, loading, error }] = useLocationUpdateMutation({
+ *   variables: {
+ *      locationUpdateId: // value for 'locationUpdateId'
+ *      requestBody: // value for 'requestBody'
+ *      tenant: // value for 'tenant'
+ *   },
+ * });
+ */
+export function useLocationUpdateMutation(baseOptions?: Apollo.MutationHookOptions<LocationUpdateMutation, LocationUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LocationUpdateMutation, LocationUpdateMutationVariables>(LocationUpdateDocument, options);
+      }
+export type LocationUpdateMutationHookResult = ReturnType<typeof useLocationUpdateMutation>;
+export type LocationUpdateMutationResult = Apollo.MutationResult<LocationUpdateMutation>;
+export type LocationUpdateMutationOptions = Apollo.BaseMutationOptions<LocationUpdateMutation, LocationUpdateMutationVariables>;
 export const LocationListDocument = gql`
     query LocationList($tenantInput: String!) {
   locationList(tenant: $tenantInput) {

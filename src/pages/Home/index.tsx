@@ -130,6 +130,7 @@ function Home() {
           >
             {options?.map((option) => {
               return (
+                //@ts-expect-error
                 <Option key={option.value} value={option.value}>
                   {option.label}
                 </Option>

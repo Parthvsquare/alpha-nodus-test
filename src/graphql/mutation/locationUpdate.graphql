@@ -1,0 +1,13 @@
+mutation LocationUpdate(
+  $locationUpdateId: String!
+  $requestBody: LocationWriteInput!
+  $tenant: String!
+) {
+  locationUpdate(
+    id: $locationUpdateId
+    requestBody: $requestBody
+    tenant: $tenant
+  ) {
+    resourceID
+  }
+}
