@@ -6,6 +6,7 @@ import {
 import { App, Button, Col, Form, Input, Modal, Row } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useAtom } from "jotai";
+import ReactJson from "react-json-view";
 
 interface IProps {
   open: boolean;
@@ -14,16 +15,25 @@ interface IProps {
 const { TextArea } = Input;
 
 function CreateLocation({ open, handleClose }: IProps) {
-  const [locationCreateMutation, { loading, error }] =
-    useLocationCreateMutation({
-      onCompleted: () => {
-        form.resetFields();
-        handleClose();
-      },
-    });
+  const [locationCreateMutation, { loading }] = useLocationCreateMutation({
+    onCompleted: () => {
+      form.resetFields();
+      handleClose();
+    },
+    onError(error) {
+      notification.error({
+        message: "Cannot create a new location",
+      });
+      modal.error({
+        title: "Encountered an Error",
+        content: <ReactJson src={error} theme="monokai" />,
+        width: "60vh",
+      });
+    },
+  });
 
   const [form] = useForm<LocationWriteInput>();
-  const { message } = App.useApp();
+  const { message, notification, modal } = App.useApp();
   const [tenant] = useAtom(tenantInput);
 
   async function formSubmit() {
@@ -87,13 +97,13 @@ function CreateLocation({ open, handleClose }: IProps) {
             </Form.Item>
 
             <Form.Item label="Address" name="address">
-              <Input />
+              <TextArea rows={2} />
             </Form.Item>
             <Form.Item label="Alias" name="alias">
               <Input />
             </Form.Item>
             <Form.Item label="Description" name="description">
-              <Input />
+              <TextArea rows={2} />
             </Form.Item>
             <Form.Item label="ID" name="id">
               <Input />

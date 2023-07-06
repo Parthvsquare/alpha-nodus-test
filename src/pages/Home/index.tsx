@@ -1,6 +1,7 @@
 import { tenantInput } from "@/store/authAtom";
 import { useLocationListQuery } from "@/types/generated";
 import {
+  App,
   Button,
   Card,
   Col,
@@ -13,16 +14,28 @@ import {
 } from "antd";
 import { RedoOutlined, PlusOutlined } from "@ant-design/icons";
 import { useAtom } from "jotai";
+import ReactJson from "react-json-view";
 
 const { Text, Title } = Typography;
 
 function Home() {
   const [tenant] = useAtom(tenantInput);
+  const { notification, modal } = App.useApp();
 
   const { data, loading, error } = useLocationListQuery({
     variables: {
       //@ts-expect-error
       tenantInput: tenant,
+    },
+    onError(error) {
+      notification.error({
+        message: "Cannot create a new location",
+      });
+      modal.error({
+        title: "Encountered an Error",
+        content: <ReactJson src={error} theme="monokai" />,
+        width: "60vh",
+      });
     },
   });
 
