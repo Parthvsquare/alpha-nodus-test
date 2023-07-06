@@ -1,6 +1,17 @@
 import { tenantInput } from "@/store/authAtom";
 import { useLocationListQuery } from "@/types/generated";
-import { Button, Card, Col, Result, Row, Spin, Tag, Typography } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Input,
+  Result,
+  Row,
+  Spin,
+  Tag,
+  Typography,
+} from "antd";
+import { RedoOutlined, PlusOutlined } from "@ant-design/icons";
 import { useAtom } from "jotai";
 
 const { Text, Title } = Typography;
@@ -25,55 +36,66 @@ function Home() {
   }
 
   return (
-    <Spin spinning={loading}>
-      <Row gutter={[10, 16]}>
-        {data?.locationList?.resources?.map((value) => {
-          return (
-            <Col
-              xs={{ span: 4, offset: 1 }}
-              lg={{ span: 6, offset: 0 }}
-              key={value!.id}
-            >
-              <Card
-                title={
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      marginBlock: "1rem",
-                    }}
-                  >
+    <>
+      <section>
+        <div style={{ display: "flex", margin: "1rem" }}>
+          <Input
+            placeholder="Search Locations"
+            disabled={data?.locationList?.resources?.length === 0}
+          />
+        </div>
+      </section>
+
+      <Spin spinning={loading}>
+        <Row gutter={[10, 16]} style={{ padding: "1rem" }}>
+          {data?.locationList?.resources?.map((value) => {
+            return (
+              <Col
+                xs={{ span: 4, offset: 1 }}
+                lg={{ span: 6, offset: 0 }}
+                key={value!.id}
+              >
+                <Card
+                  title={
                     <div
                       style={{
                         display: "flex",
-                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        marginBlock: "1rem",
                       }}
                     >
-                      <Title level={4}>{value?.name}</Title>
-                      <Text style={{ fontWeight: "normal" }}>
-                        {value?.address}
-                      </Text>
-                    </div>
-                    <div>
-                      <Tag
-                        color="processing"
-                        style={{ textTransform: "capitalize" }}
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
                       >
-                        {value?.status}
-                      </Tag>
+                        <Title level={4}>{value?.name}</Title>
+                        <Text style={{ fontWeight: "normal" }}>
+                          {value?.address}
+                        </Text>
+                      </div>
+                      <div>
+                        <Tag
+                          color="processing"
+                          style={{ textTransform: "capitalize" }}
+                        >
+                          {value?.status}
+                        </Tag>
+                      </div>
                     </div>
-                  </div>
-                }
-              >
-                <div style={{ display: "flex", rowGap: "1rem" }}>
-                  {/* <Text>{value?.telecom.}</Text> */}
-                </div>
-              </Card>
-            </Col>
-          );
-        })}
-      </Row>
-    </Spin>
+                  }
+                >
+                  {/* <div style={{ display: "flex", rowGap: "1rem" }}>
+                    <Text>{value?.telecom.}</Text>
+                  </div> */}
+                </Card>
+              </Col>
+            );
+          })}
+        </Row>
+      </Spin>
+    </>
   );
 }
 
