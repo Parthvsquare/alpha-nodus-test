@@ -1,5 +1,6 @@
+import CreateLocation from "@/components/Modal/CreateLocation";
 import { tenantInput } from "@/store/authAtom";
-import { useLocationListQuery } from "@/types/generated";
+import { LocationWriteInput, useLocationListQuery } from "@/types/generated";
 import {
   App,
   Button,
@@ -12,8 +13,8 @@ import {
   Tag,
   Typography,
 } from "antd";
-import { RedoOutlined, PlusOutlined } from "@ant-design/icons";
 import { useAtom } from "jotai";
+import { useState } from "react";
 import ReactJson from "react-json-view";
 
 const { Text, Title } = Typography;
@@ -21,6 +22,9 @@ const { Text, Title } = Typography;
 function Home() {
   const [tenant] = useAtom(tenantInput);
   const { notification, modal } = App.useApp();
+  const [open, setOpen] = useState(false);
+  const [inputCapture, setInputCapture] = useState("");
+  const [initialValues, setInitialValues] = useState<LocationWriteInput>();
 
   const { data, loading, error } = useLocationListQuery({
     variables: {
@@ -48,12 +52,38 @@ function Home() {
     />;
   }
 
+  function onDoubleClick(index: number) {
+    setOpen(true);
+
+    const formValue = data?.locationList?.resources![index];
+    const value: LocationWriteInput = {
+      name: formValue!.name,
+      address: formValue?.address,
+      alias: formValue?.alias,
+      description: formValue?.description,
+      id: formValue?.id,
+      managingOrganization: formValue?.managingOrganization,
+      npi: formValue?.npi,
+      partOf: formValue?.partOf,
+      status: formValue?.status,
+      tag: formValue?.tag,
+      taxId: formValue?.taxId,
+      telecom: [...(formValue?.telecom || [])],
+      tenant: formValue?.tenant,
+      type: formValue?.type,
+      updatedAt: formValue?.updatedAt,
+    };
+
+    setInitialValues(value);
+  }
+
   return (
     <>
       <section>
         <div style={{ display: "flex", margin: "1rem" }}>
           <Input
-            placeholder="Search Locations"
+            onChange={(e) => setInputCapture(e.target.value)}
+            placeholder="Search Location names"
             disabled={data?.locationList?.resources?.length === 0}
           />
         </div>
@@ -61,7 +91,7 @@ function Home() {
 
       <Spin spinning={loading}>
         <Row gutter={[10, 16]} style={{ padding: "1rem" }}>
-          {data?.locationList?.resources?.map((value) => {
+          {data?.locationList?.resources?.map((value, index) => {
             return (
               <Col
                 xs={{ span: 4, offset: 1 }}
@@ -69,6 +99,7 @@ function Home() {
                 key={value!.id}
               >
                 <Card
+                  onDoubleClick={() => onDoubleClick(index)}
                   title={
                     <div
                       style={{
@@ -108,6 +139,12 @@ function Home() {
           })}
         </Row>
       </Spin>
+
+      <CreateLocation
+        open={open}
+        handleClose={() => setOpen(!open)}
+        initialValue={initialValues}
+      />
     </>
   );
 }

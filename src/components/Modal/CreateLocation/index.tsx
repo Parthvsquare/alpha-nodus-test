@@ -6,15 +6,17 @@ import {
 import { App, Button, Col, Form, Input, Modal, Row } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useAtom } from "jotai";
+import { useEffect } from "react";
 import ReactJson from "react-json-view";
 
 interface IProps {
   open: boolean;
   handleClose: () => void;
+  initialValue?: LocationWriteInput;
 }
 const { TextArea } = Input;
 
-function CreateLocation({ open, handleClose }: IProps) {
+function CreateLocation({ open, handleClose, initialValue }: IProps) {
   const [locationCreateMutation, { loading }] = useLocationCreateMutation({
     onCompleted: () => {
       form.resetFields();
@@ -36,6 +38,12 @@ function CreateLocation({ open, handleClose }: IProps) {
   const { message, notification, modal } = App.useApp();
   const [tenant] = useAtom(tenantInput);
 
+  useEffect(() => {
+    if (initialValue) {
+      form.setFieldsValue({ ...initialValue, telecom: [] });
+    }
+  }, [initialValue]);
+
   async function formSubmit() {
     try {
       await form.validateFields();
@@ -55,15 +63,18 @@ function CreateLocation({ open, handleClose }: IProps) {
 
   return (
     <Form
-      name="create_location"
+      name="crud_location"
       form={form}
       disabled={loading}
       onSubmitCapture={formSubmit}
+      initialValues={{
+        ...initialValue,
+      }}
     >
       <Modal
         open={open}
         width="100%"
-        title="Create Location"
+        title={`${initialValue ? "Update" : "Create"} Location`}
         onCancel={handleClose}
         footer={[
           <Button key="back" onClick={handleClose} disabled={loading}>
