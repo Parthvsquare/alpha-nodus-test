@@ -6,8 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build-develop": "tsc && vite build --mode development",
+    "build-prod": "tsc && vite build --mode production",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
+    "preinstall": "npx only-allow pnpm",
     "generate": "graphql-codegen --require dotenv/config --config codegen.ts"
   },
   "dependencies": {
@@ -39,5 +42,11 @@
     "eslint-plugin-react-refresh": "^0.4.1",
     "typescript": "^5.0.2",
     "vite": "^4.4.0"
+  },
+  "engines": {
+    "node": ">=18.15.0",
+    "npm": "please-use-pnpm",
+    "yarn": "please-use-pnpm",
+    "pnpm": "8.4.0"
   }
 }
