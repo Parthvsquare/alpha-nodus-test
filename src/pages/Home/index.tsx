@@ -9,15 +9,23 @@ import {
   Input,
   Result,
   Row,
+  Select,
+  SelectProps,
   Spin,
   Tag,
   Typography,
 } from "antd";
 import { useAtom } from "jotai";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import ReactJson from "react-json-view";
 
 const { Text, Title } = Typography;
+
+const options: SelectProps["options"] = [
+  { label: "Description", value: "description" },
+  { label: "Alias", value: "alias" },
+  { label: "Status", value: "status" },
+];
 
 function Home() {
   const [tenant] = useAtom(tenantInput);
@@ -25,6 +33,7 @@ function Home() {
   const [open, setOpen] = useState(false);
   const [inputCapture, setInputCapture] = useState("");
   const [initialValues, setInitialValues] = useState<LocationWriteInput>();
+  const [filters, setFilters] = useState<string[]>([]);
 
   const { data, loading, error } = useLocationListQuery({
     variables: {
@@ -52,8 +61,24 @@ function Home() {
     />;
   }
 
-  const filteredLocations = data?.locationList?.resources?.filter((location) =>
-    location?.name.toLowerCase().includes(inputCapture.toLowerCase()),
+  const handleChange = (selectedValues: string[]) => {
+    setFilters(selectedValues);
+  };
+
+  const filteredLocations = useMemo(
+    () =>
+      data?.locationList?.resources?.filter((location) => {
+        if (!location) {
+          return false;
+        }
+        return (
+          //@ts-expect-error
+          // filter will be type of any
+          filters.every((filter) => location[filter] != undefined) &&
+          location.name.toLowerCase().includes(inputCapture.toLowerCase())
+        );
+      }),
+    [filters, inputCapture, data],
   );
 
   function onDoubleClick(index: number) {
@@ -84,12 +109,33 @@ function Home() {
   return (
     <>
       <section>
-        <div style={{ display: "flex", margin: "1rem" }}>
+        <div
+          style={{ display: "flex", margin: "1rem", flexDirection: "column" }}
+        >
           <Input
             onChange={(e) => setInputCapture(e.target.value)}
             placeholder="Search Location names"
             disabled={data?.locationList?.resources?.length === 0}
           />
+        </div>
+        <div style={{ margin: "1rem" }}>
+          <Select
+            mode="tags"
+            allowClear
+            value={filters}
+            style={{ width: "100%" }}
+            placeholder="Please select"
+            onChange={handleChange}
+            options={options}
+          >
+            {options?.map((option) => {
+              return (
+                <Option key={option.value} value={option.value}>
+                  {option.label}
+                </Option>
+              );
+            })}
+          </Select>
         </div>
       </section>
 
