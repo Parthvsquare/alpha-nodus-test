@@ -32,7 +32,7 @@ function AppHeader() {
         <Button icon={<RedoOutlined />} onClick={refetchLocationList}>
           Reload
         </Button>
-        <Title level={2}>Location</Title>
+        <Title level={2}>Locations</Title>
         <Button icon={<PlusOutlined />} onClick={() => setOpen(true)}>
           New
         </Button>
