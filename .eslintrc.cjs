@@ -17,14 +17,19 @@ module.exports = {
     project: true,
     tsconfigRootDir: __dirname,
   },
+  settings: {
+    "import/resolver": {
+      node: {
+        extensions: [".ts", ".tsx"],
+      },
+    },
+  },
   plugins: ["react-refresh"],
   rules: {
     "react-refresh/only-export-components": [
       "warn",
       { allowConstantExport: true },
     ],
-    "@tanstack/query/exhaustive-deps": "error",
-    "@tanstack/query/prefer-query-object-syntax": "error",
     "@typescript-eslint/no-non-null-assertion": "off",
   },
 };

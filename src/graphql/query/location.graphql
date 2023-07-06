@@ -1,5 +1,5 @@
-query LocationList($tenant: String!) {
-  locationList(tenant: $tenant) {
+query LocationList($tenantInput: String!) {
+  locationList(tenant: $tenantInput) {
     pages
     resources {
       address

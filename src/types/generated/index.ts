@@ -5705,14 +5705,14 @@ export type UserUpdateInput = {
 
 export type LocationCreateMutationVariables = Exact<{
   requestBody: LocationWriteInput;
-  tenant: Scalars['String'];
+  tenantInput: Scalars['String'];
 }>;
 
 
 export type LocationCreateMutation = { locationCreate?: { resourceID: string } | null };
 
 export type LocationListQueryVariables = Exact<{
-  tenant: Scalars['String'];
+  tenantInput: Scalars['String'];
 }>;
 
 
@@ -5720,8 +5720,8 @@ export type LocationListQuery = { locationList?: { pages: number, resources?: Ar
 
 
 export const LocationCreateDocument = gql`
-    mutation LocationCreate($requestBody: LocationWriteInput!, $tenant: String!) {
-  locationCreate(requestBody: $requestBody, tenant: $tenant) {
+    mutation LocationCreate($requestBody: LocationWriteInput!, $tenantInput: String!) {
+  locationCreate(requestBody: $requestBody, tenant: $tenantInput) {
     resourceID
   }
 }
@@ -5742,7 +5742,7 @@ export type LocationCreateMutationFn = Apollo.MutationFunction<LocationCreateMut
  * const [locationCreateMutation, { data, loading, error }] = useLocationCreateMutation({
  *   variables: {
  *      requestBody: // value for 'requestBody'
- *      tenant: // value for 'tenant'
+ *      tenantInput: // value for 'tenantInput'
  *   },
  * });
  */
@@ -5754,8 +5754,8 @@ export type LocationCreateMutationHookResult = ReturnType<typeof useLocationCrea
 export type LocationCreateMutationResult = Apollo.MutationResult<LocationCreateMutation>;
 export type LocationCreateMutationOptions = Apollo.BaseMutationOptions<LocationCreateMutation, LocationCreateMutationVariables>;
 export const LocationListDocument = gql`
-    query LocationList($tenant: String!) {
-  locationList(tenant: $tenant) {
+    query LocationList($tenantInput: String!) {
+  locationList(tenant: $tenantInput) {
     pages
     resources {
       address
@@ -5795,7 +5795,7 @@ export const LocationListDocument = gql`
  * @example
  * const { data, loading, error } = useLocationListQuery({
  *   variables: {
- *      tenant: // value for 'tenant'
+ *      tenantInput: // value for 'tenantInput'
  *   },
  * });
  */
