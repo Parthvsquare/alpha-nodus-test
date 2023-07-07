@@ -1,6 +1,10 @@
 import CreateLocation from "@/components/Modal/CreateLocation";
 import { tenantInput } from "@/store/authAtom";
-import { LocationWriteInput, useLocationListQuery } from "@/types/generated";
+import {
+  LocationWriteInput,
+  useLocationListQuery,
+  useLocationRemoveMutation,
+} from "@/types/generated";
 import {
   App,
   Button,
@@ -18,7 +22,14 @@ import {
 import { useAtom } from "jotai";
 import { useMemo, useState } from "react";
 import ReactJson from "react-json-view";
-
+import {
+  DeleteOutlined,
+  PhoneOutlined,
+  PushpinOutlined,
+  ClockCircleOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
+import { calculateTimeDifference } from "@/utils/updatedSince";
 const { Text, Title } = Typography;
 
 const options: SelectProps["options"] = [
@@ -35,7 +46,12 @@ function Home() {
   const [initialValues, setInitialValues] = useState<LocationWriteInput>();
   const [filters, setFilters] = useState<string[]>([]);
 
-  const { data, loading, error } = useLocationListQuery({
+  const {
+    data,
+    loading: locationListLoading,
+    error,
+    refetch,
+  } = useLocationListQuery({
     variables: {
       //@ts-expect-error
       tenantInput: tenant,
@@ -51,6 +67,24 @@ function Home() {
       });
     },
   });
+
+  const [locationRemoveMutation, { loading: removeListLoading }] =
+    useLocationRemoveMutation({
+      onCompleted: () => {
+        refetch();
+        notification.success({ message: "Successfully Updated Location" });
+      },
+      onError(error) {
+        notification.error({
+          message: "Cannot update to a new location",
+        });
+        modal.error({
+          title: "Encountered an Error",
+          content: <ReactJson src={error} theme="monokai" />,
+          width: "60vh",
+        });
+      },
+    });
 
   if (error) {
     <Result
@@ -81,6 +115,20 @@ function Home() {
     [filters, inputCapture, data],
   );
 
+  function removeClickedLocation(index: number) {
+    const locationId = data?.locationList?.resources![index]?.id;
+    if (locationId) {
+      locationRemoveMutation({
+        variables: {
+          //@ts-expect-error
+          locationRemoveId: locationId,
+          //@ts-expect-error
+          tenant: tenant,
+        },
+      });
+    }
+  }
+
   function onDoubleClick(index: number) {
     setOpen(true);
 
@@ -105,6 +153,11 @@ function Home() {
 
     setInitialValues(value);
   }
+
+  const loading = useMemo(
+    () => locationListLoading || removeListLoading,
+    [locationListLoading, removeListLoading],
+  );
 
   return (
     <>
@@ -181,9 +234,58 @@ function Home() {
                     </div>
                   }
                 >
-                  {/* <div style={{ display: "flex", rowGap: "1rem" }}>
-                    <Text>{value?.telecom.}</Text>
-                  </div> */}
+                  <div
+                    style={{
+                      display: "flex",
+                      rowGap: "1rem",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "10px",
+                      }}
+                    >
+                      <Text>
+                        <PhoneOutlined /> Phone
+                      </Text>
+
+                      <Text>
+                        <PushpinOutlined /> Location
+                      </Text>
+
+                      <Text>
+                        <ClockCircleOutlined />{" "}
+                        {calculateTimeDifference({
+                          updatedAt: value!.updatedAt!,
+                        })}
+                      </Text>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "10px",
+                      }}
+                    >
+                      <Button
+                        icon={<DeleteOutlined />}
+                        danger
+                        onClick={() => removeClickedLocation(index)}
+                      >
+                        Remove
+                      </Button>
+
+                      <Button
+                        icon={<EditOutlined />}
+                        onClick={() => onDoubleClick(index)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
                 </Card>
               </Col>
             );

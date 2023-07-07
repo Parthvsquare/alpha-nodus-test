@@ -1,4 +1,4 @@
-const calculateTimeDifference = ({
+export const calculateTimeDifference = ({
   updatedAt,
 }: {
   updatedAt: number;
