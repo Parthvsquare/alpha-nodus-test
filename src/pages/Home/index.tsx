@@ -282,7 +282,7 @@ function Home() {
                         icon={<EditOutlined />}
                         onClick={() => onDoubleClick(index)}
                       >
-                        Delete
+                        Edit
                       </Button>
                     </div>
                   </div>
